@@ -11,6 +11,9 @@ exports.startExpressApp = () => {
             console.log(`App listening on ${process.env.PORT || 5000}`);
             resolve(app);
         });
+        app.get('/', (req, res) => {
+            res.send('Hi, I am Elva.');
+        });
     });
 };
 //# sourceMappingURL=start-express-app.js.map

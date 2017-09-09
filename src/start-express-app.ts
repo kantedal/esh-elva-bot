@@ -5,7 +5,7 @@ import * as bodyParser from 'body-parser'
 export const startExpressApp = (): Promise<express.Application> => {
   return new Promise<express.Application>((resolve, reject) => {
     const app = express()
-
+      
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -17,7 +17,7 @@ export const startExpressApp = (): Promise<express.Application> => {
     // Routes
     app.get('/', (req, res) => {
         res.send('Hi, I am Elva.')
-
     })
+
   })
 }
