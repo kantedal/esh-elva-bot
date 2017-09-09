@@ -1,4 +1,5 @@
 import events, {IEvent} from '../data/eventForImmigrants'
+import swedishDirectionsByDifficulty from '../data/swedishForImmigrants'
 
 export const getRandomEventForImmigrants = async () => {
   let answer = ''
@@ -15,4 +16,8 @@ export const getRandomEventForImmigrants = async () => {
   answer += `.\n Otherwise feel free to ask again!`
 
   return answer
+}
+
+export const getSwedishDirections = async (difficulty: string) => {
+  return swedishDirectionsByDifficulty[difficulty]
 }

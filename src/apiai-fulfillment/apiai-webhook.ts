@@ -2,14 +2,15 @@ import * as express from 'express'
 import {findNearestParkingSpot} from './actions/parking'
 import {generateResponseJson, IResponseJson} from './generateResponseJson'
 import {findPointOfIntrest} from './actions/pointOfIntrest'
-import {getRandomEventForImmigrants} from './actions/immigrantEvent'
+import {getRandomEventForImmigrants, getSwedishDirections} from './actions/immigrant'
 import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 
 const enum Actions {
   parking = 'parking',
   address = 'address',
   integration = 'integration',
-  immigrantEvent = 'immigrantEvent'
+  immigrantEvent = 'immigrantEvent',
+  learnSwedish = 'learnSwedish'
 }
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<IResponseJson> => {
@@ -25,6 +26,10 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       break
     case Actions.immigrantEvent:
       responseMessage = await getRandomEventForImmigrants()
+      break
+    case Actions.learnSwedish:
+      console.log(`user wants to learn swedish as a ${parameters['swedishLevel']}`)
+      responseMessage = await getSwedishDirections(parameters['swedishLevel'])
       break
     default:
       responseMessage = 'Something went wrong, sorry!'
