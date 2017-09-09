@@ -29,7 +29,7 @@ export const sendMessage = async (message: string, sessionToken: string, databas
       console.log(JSON.stringify(userEntitiesResponse, null, 4))
 
       const request = apiaiApp.textRequest(translatedMessage, {
-        sessionId: sessionToken.substring(100, 136),
+        sessionId: sessionToken.substring(1, 36),
         entities: userEntities
       })
 
