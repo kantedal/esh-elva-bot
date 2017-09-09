@@ -29,15 +29,13 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
     for(const event of messaging_events){
       const senderId = event.sender.id
 
-      getDatabaseUser(senderId, senderId).then((user: IUser) => {
-
+      getDatabaseUser(senderId, senderId).then(async (user: IUser) => {
+        if(event.message && event.message.text) {
+          const text = event.message.text
+          const responseMessage: string = await sendMessage(text, user.sessionId, { userId: user.userId })
+          sendText(senderId, responseMessage)
+        }
       })
-
-      if(event.message && event.message.text) {
-        const text = event.message.text
-        const responseMessage: string = await sendMessage(text, senderId, { userId: senderId })
-        sendText(senderId, responseMessage)
-      }
     }
 
     res.sendStatus(200)
