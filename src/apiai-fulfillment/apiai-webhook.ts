@@ -28,7 +28,6 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseMessage = await getRandomEventForImmigrants()
       break
     case Actions.learnSwedish:
-      console.log(`user wants to learn swedish as a ${parameters['swedishLevel']}`)
       responseMessage = await getSwedishDirections(parameters['swedishLevel'].toLowerCase())
       break
     default:
