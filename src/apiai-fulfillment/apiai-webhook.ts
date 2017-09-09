@@ -41,8 +41,8 @@ export const initApiAiWebhook = async (app: express.Application) => {
 
     console.log('Action: ', action, 'Parameters: ', parameters)
 
-    const user: any = getUserFromSessionId(body.sessionId)
-    console.log(user)
+    const user: any = await getUserFromSessionId(body.sessionId)
+    console.log('user', user)
 
     const response: IResponseJson = await resolveMessage(action, parameters)
 

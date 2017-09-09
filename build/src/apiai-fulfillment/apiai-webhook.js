@@ -27,8 +27,8 @@ exports.initApiAiWebhook = (app) => tslib_1.__awaiter(this, void 0, void 0, func
         const parameters = body.result.parameters;
         console.log('session id', body.sessionId);
         console.log('Action: ', action, 'Parameters: ', parameters);
-        const user = databaseUser_1.getUserFromSessionId(body.sessionId);
-        console.log(user);
+        const user = yield databaseUser_1.getUserFromSessionId(body.sessionId);
+        console.log('user', user);
         const response = yield exports.resolveMessage(action, parameters);
         res.send(JSON.stringify(response));
     }));
