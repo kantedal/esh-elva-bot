@@ -15,7 +15,7 @@ exports.startExpressApp = () => {
             res.send('Hi, I am Elva.');
         });
         app.get('/webhook/', (req, res) => {
-            if (req.query['hub.verify_token'] === process.env.MESSENGER_VERIFY_TOKEN) {
+            if (req.query['hub.verify_token'] === 'detejubaraetthack') {
                 res.send(req.query['hub.challenge']);
             }
             res.send('Wrong token.');

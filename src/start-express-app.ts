@@ -21,7 +21,7 @@ export const startExpressApp = (): Promise<express.Application> => {
 
     // Facebook
     app.get('/webhook/', (req, res) => {
-        if(req.query['hub.verify_token'] === process.env.MESSENGER_VERIFY_TOKEN) {
+        if(req.query['hub.verify_token'] === 'detejubaraetthack') {
             res.send(req.query['hub.challenge'])
         }
         res.send('Wrong token.')
