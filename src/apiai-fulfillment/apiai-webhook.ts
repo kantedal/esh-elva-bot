@@ -35,7 +35,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
     case Actions.poiAsTourist:
       const param = parameters['point_of_interest'] || parameters['point_of_interest_any']
       console.log(`The param is: ${param}`)
-      responseMessage = await findPointOfInterest(param).toString() // ?
+      responseMessage = await findPointOfInterest(param) // ?
       break
     case Actions.transport:
       console.log('transport action', parameters['from-address'], parameters['to-address'])

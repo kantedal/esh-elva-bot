@@ -14,8 +14,8 @@ const poiApiAddress2 = '&version=1.1.0&'
 export const findPointOfInterest = async (type: string) => {
   const res1 = await request(poiApiAddress1 + type + poiApiAddress2)
 
-  return new Promise((resolve, reject) => {
-    parseXMLString(res1, (err, res2) => {
+  return new Promise<string>((resolve, reject) => {
+    parseXMLString(res1, async (err, res2) => {
       if (err) {
         console.log(err)
         err.toString()
@@ -47,7 +47,7 @@ export const findPointOfInterest = async (type: string) => {
         }
       }
 
-      let returnString = `Try the following:\n`
+      let returnString: string = `Try the following:\n`
       for (const d of data) {
         returnString += `\n${d.name} at ${d.address} \n`
 
