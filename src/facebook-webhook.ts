@@ -28,8 +28,7 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
       const sender = event.sender.id
       if(event.message && event.message.text) {
         const text = event.message.text
-        console.log('hej')
-        const responseMessage: string = 'hej' // await sendMessage(text, 'session-token', { userId: 'heja blavitt!!'})
+        const responseMessage: string = await sendMessage(text, 'session-token', { userId: 'heja blavitt!!'})
         sendText(sender, responseMessage)
       }
     }
