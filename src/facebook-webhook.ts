@@ -29,8 +29,8 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
             const sender = event.sender.id
             if(event.message && event.message.text) {
                 const text = event.message.text
-                //const responseMessage: string = await sendMessage(text, 'session-token', {userId: 'heja blavitt!!'})
-                sendText(sender, text)
+                const responseMessage: string = await sendMessage(text, 'session-token', {userId: 'heja blavitt!!'})
+                sendText(sender, responseMessage)
             }
         }
 
@@ -46,7 +46,7 @@ const sendText = (sender, text) => {
     const messageData = {text}
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token: access_token},
+        qs: {access_token},
         method: 'POST',
         json: {
             recipient: {id: sender},

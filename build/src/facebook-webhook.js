@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
+const api_ai_1 = require("./chat-logics/api-ai");
 const request = require('request');
 const access_token = process.env.FACEBOOK_PAGE_ACCESS_TOKEN;
 const verify_token = process.env.MESSENGER_VERIFY_TOKEN;
@@ -22,7 +23,8 @@ exports.initFacebookMessengerWebhook = (app) => {
             const sender = event.sender.id;
             if (event.message && event.message.text) {
                 const text = event.message.text;
-                sendText(sender, text);
+                const responseMessage = yield api_ai_1.sendMessage(text, 'session-token', { userId: 'heja blavitt!!' });
+                sendText(sender, responseMessage);
             }
         }
         res.sendStatus(200);
@@ -35,7 +37,7 @@ const sendText = (sender, text) => {
     const messageData = { text };
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: { access_token: access_token },
+        qs: { access_token },
         method: 'POST',
         json: {
             recipient: { id: sender },
