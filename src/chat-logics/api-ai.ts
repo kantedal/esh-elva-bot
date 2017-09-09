@@ -1,9 +1,7 @@
 import {IUser, setSessionId} from './databaseUser'
 import {translateMessage} from './translate'
-const apiai = require('apiai')
+import {apiaiApp} from '../main'
 const translate = require('google-translate-api')
-
-const app = apiai(process.env.APIAI_API_KEY)
 
 export const sendMessage = async (message: string, sessionToken: string, databaseUser: IUser) => {
   return new Promise<string>(async (resolve, reject) => {
@@ -21,7 +19,7 @@ export const sendMessage = async (message: string, sessionToken: string, databas
       ]
     }]
 
-    const userEntitiesRequest = app.userEntitiesRequest({
+    const userEntitiesRequest = apiaiApp.userEntitiesRequest({
       sessionId: sessionToken,
       entities: userEntities,
     })
@@ -30,7 +28,7 @@ export const sendMessage = async (message: string, sessionToken: string, databas
       console.log('User entities response: ')
       console.log(JSON.stringify(userEntitiesResponse, null, 4))
 
-      const request = app.textRequest(translatedMessage, {
+      const request = apiaiApp.textRequest(translatedMessage, {
         sessionId: sessionToken.substring(100, 136),
         entities: userEntities
       })
