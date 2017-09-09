@@ -6,7 +6,7 @@ const translate = require('google-translate-api')
 const app = apiai(process.env.APIAI_API_KEY)
 
 export const sendMessage = async (message: string, sessionToken: string, databaseUser: IUser) => {
-  const translatedMessage = message // await translateMessage(message, 'en')
+  const translatedMessage = await translateMessage(message, 'en')
 
   return new Promise<string>((resolve, reject) => {
     console.log(translatedMessage)
@@ -15,7 +15,6 @@ export const sendMessage = async (message: string, sessionToken: string, databas
     })
 
     request.on('response', async (response) => {
-      console.log(response)
       const responseMessage = response.result.fulfillment.speech
       const translatedResponseMessage = await translateMessage(responseMessage, 'sv')
       console.log(translatedResponseMessage)

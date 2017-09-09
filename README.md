@@ -1,21 +1,4 @@
-[![Dev dependencies][dependencies-badge]][dependencies]
-[![Node.js version][nodejs-badge]][nodejs]
-[![NPM version][npm-badge]][npm]
-[![Build Status][travis-badge]][travis-ci]
-
-[![MIT License][license-badge]][LICENSE]
-[![PRs Welcome][prs-badge]][prs]
-[![Donate][donate-badge]][donate]
-
-[![Watch on GitHub][github-watch-badge]][github-watch]
-[![Star on GitHub][github-star-badge]][github-star]
-[![Tweet][twitter-badge]][twitter]
-
-# node-typescript-boilerplate
-
-Minimalistic boilerplate to jump-start a [Node.js][nodejs] project in [TypeScript][typescript] [2.4][typescript-24].
-
-Provides a basic template, "batteries included":
+# ELVA - Linlöpings Virtual Assistant
 
 + [TypeScript][typescript] [2.4][typescript-24] to ES6 transpilation,
 + [TSLint][tslint] 5.x with [Microsoft recommended rules][slint-microsoft-contrib],
@@ -30,23 +13,25 @@ Provides a basic template, "batteries included":
 This project is intended to be used with latest LTS release of [Node.js][nodejs] or later and [NPM][npm]. Make sure you have those installed. Then just type following commands:
 
 ```sh
-git clone https://github.com/jsynowiec/node-typescript-boilerplate
-cd node-typescript-boilerplate
+git clone ...
+cd esh-elva-bot
 npm install
 ```
 
-or just download and unzip current `master` branch:
+Set environment variables
 
 ```sh
-wget https://github.com/jsynowiec/node-typescript-boilerplate/archive/master.zip -O node-typescript-boilerplate
-unzip node-typescript-boilerplate.zip && rm node-typescript-boilerplate.zip
+cp .env.example .env
 ```
 
-### Unit tests in JavaScript
+...and set API keys. Then:
 
-Writing unit tests in TypeScript can sometimes be troublesome and confusing. Especially when mocking dependencies and using spies.
+```sh
+npm run watch && npm run dev
+```
 
-This is **optional**, but if you want to learn how to write JavaScript tests for TypeScript modules, read the [corresponding wiki page][wiki-js-tests].
+## Deploy
+Merge the master branch to the deploy branch and make sure to commit the changed build files.
 
 ## Available scripts
 
@@ -56,13 +41,6 @@ This is **optional**, but if you want to learn how to write JavaScript tests for
 + `lint` - lint source files and tests,
 + `test` - run tests,
 + `test:watch` - interactive watch mode to automatically re-run tests
-
-## Alternative
-
-As an alternative to TypeScript, you can try my [Node.js Flow boilerplate][flow-boilerplate]. It's basically the same but with ES6, async/await, Flow type checking and ESLint.
-
-## License
-MIT License. See the [LICENSE](https://github.com/jsynowiec/node-typescript-boilerplate/blob/master/LICENSE) file.
 
 [dependencies-badge]: https://david-dm.org/jsynowiec/node-typescript-boilerplate/dev-status.svg
 [dependencies]: https://david-dm.org/jsynowiec/node-typescript-boilerplate?type=dev
