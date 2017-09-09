@@ -6,16 +6,13 @@ export const startChatClient = () => {
   const server = require('http').createServer()
   const io = SocketIO(server)
 
-  console.log('HEJ')
-  console.log(process.env.APIAI_AI_KEY)
-
   io.on('connection', (client) => {
     let sessionToken: string
     let databaseUser: IUser
 
     client.on('connectUser', (data: { userId: string, sessionToken: string}) => {
       sessionToken = data.sessionToken
-      getDatabaseUser(data.userId).then((user: IUser) => {
+      getDatabaseUser(data.userId, sessionToken).then((user: IUser) => {
         databaseUser = user
         client.emit('userConnected')
       })
