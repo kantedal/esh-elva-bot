@@ -10,7 +10,6 @@ export const findPublicTransport = async (from: string, to: string) => {
   try {
     const geoPoints: IGeoCode[] = await Promise.all([geocodeAddress(from), geocodeAddress(to)])
 
-    const apiKey = process.env.OGT_API_KEY
     const apiCallUrl = `https://api.resrobot.se/v2/trip.json?key=${process.env.OGT_API_KEY}&originCoordLat=${geoPoints[0].latitude}&originCoordLong=${geoPoints[0].longitude}&destCoordLat=${geoPoints[1].latitude}&destCoordLong=${geoPoints[1].longitude}`
 
     const res = JSON.parse(await request(apiCallUrl))
@@ -27,7 +26,6 @@ export const findPublicTransport = async (from: string, to: string) => {
       if (count !== 0) responseMessage += 'Then '
       switch (leg.type) {
         case 'WALK':
-          console.log(leg)
           responseMessage += `walk to ${leg.Destination.name}, this will take approximately ${leg.duration[2]} minutes. `
           break
         case 'JNY':
