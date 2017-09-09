@@ -2,9 +2,22 @@ import * as express from 'express'
 import {error} from 'util'
 
 const request = require('request')
-const token: string = process.env.FACEBOOK_PAGE_ACCESS_TOKEN
+// const token: string = process.env.FACEBOOK_PAGE_ACCESS_TOKEN
+const token = 'EAAVvTioZBgqYBACMJZCAP92BiHRw9NNL0sLqXAFVrkYv4W2Muc1i6VNZC8bo3Li80RUZA07SeXKqLcXLJZAL5qM70ZCcuyi24MIZCRr8stTQXt74ha7TgFP58RoZBXDQxisqMd8NTZAVoZATuwLcoQI6K9zZBNvzPWvF40l7MGkuoYQBwZDZD'
 
 export const initFacebookMessengerWebhook = (app: express.Application) => {
+
+    app.get('/', (req, res) => {
+        res.send('Hi, I am Elva...  ')
+    })
+
+    // Facebook
+    app.get('/webhook/', (req, res) => {
+        if(req.query['hub.verify_token'] === 'detejubaraetthack') {
+            res.send(req.query['hub.challenge'])
+        }
+        res.send('Wrong token.')
+    })
 
     app.post('/webhook/', (req, res) => {
         const messaging_events = req.body.entry[0].messaging
@@ -12,7 +25,7 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
             const sender = event.sender.id
             if(event.message && event.message.text) {
                 const text = event.message.text
-                sendText(sender, 'Text echo: ' + text.substring(0,100))
+                sendText(sender, 'Hej')
             }
         }
 
@@ -34,13 +47,6 @@ const sendText = (sender, text) => {
             recipient: {id: sender},
             message: messageData
         }
-
-        /*(error, response, body) => {
-        if(error){
-            console.log('sending error')
-        }else if(response.body.error){
-            console.log('response body error')
-        }*/
 
     })
 }
