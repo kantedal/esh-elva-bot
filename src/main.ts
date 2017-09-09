@@ -8,10 +8,12 @@ import {findPublicTransport} from './apiai-fulfillment/actions/public-transport'
 import {sendMessage} from './chat-logics/api-ai'
 import {initFacebookMessengerWebhook} from './facebook-webhook'
 
-export const apiaiApp = apiai(process.env.APIAI_API_KEY)
+export let apiaiApp
 
 const startServer = async (): Promise<void> => {
-  findPublicTransport('Stora torget linköping', 'Ryds alle 19')
+  apiaiApp = apiai(process.env.APIAI_API_KEY)
+
+  // findPublicTransport('Stora torget linköping', 'Ryds alle 19')
 
   const App: express.Application = await startExpressApp()
 
