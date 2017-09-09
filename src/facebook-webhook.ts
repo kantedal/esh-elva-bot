@@ -4,7 +4,7 @@ import {sendMessage} from "./chat-logics/api-ai";
 
 const request = require('request')
 // const token: string = process.env.FACEBOOK_PAGE_ACCESS_TOKEN
-const token = 'EAAVvTioZBgqYBAKjMA5ZBPjTl3zIY1klJzd3aeePmEoaSvIGdp8dDouen0b9mJNQ4lDkdb9eVhKpN1I1omSuzIFeBup3e77KM2IqdWxrfgDobbXlT8VuGJw79dx8aZAKAi3agv6QNUu9MtTnfxk105Don0ycrwaDOfq0ahyegZDZD'
+const token = 'EAAVvTioZBgqYBAOzdiUFVcT0wIPVPPz36wGFIpF3DJHUQYP3nVyMjpabOD5bvialwy0qVwcoilXj8cNJfockId9qkR9WCzZC8JS8WDfxZBfcd3DkZBBirZCWjjyiynRR45X36MF1YZC2au6pq5VcrZBZBZBU7XFQPpSGZCnzWJzf9uTgZDZD'
 
 export const initFacebookMessengerWebhook = (app: express.Application) => {
 
@@ -23,8 +23,7 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
     })
 
     app.post('/messenger-webhook/', async (req, res) => {
-        console.log(req)
-        console.log(res)
+        console.log('inne!')
         const messaging_events = req.body.entry[0].messaging
 
         for(const event of messaging_events){
