@@ -6,9 +6,6 @@ npm-debug.log*
 # Dependencies
 node_modules/
 
-# Ignore built files on master branch
-build
-
 # Coverage
 coverage
 
