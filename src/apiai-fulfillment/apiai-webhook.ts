@@ -25,6 +25,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
   return generateResponseJson(responseMessage)
 }
 
+
 export const initApiAiWebhook = async (app: express.Application) => {
   // findPointOfIntrest()
   app.post('/apiai', async (req: express.Request, res: any) => {

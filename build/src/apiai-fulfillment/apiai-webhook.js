@@ -5,6 +5,8 @@ const parking_1 = require("./actions/parking");
 const generateResponseJson_1 = require("./generateResponseJson");
 exports.resolveMessage = (action, parameters) => tslib_1.__awaiter(this, void 0, void 0, function* () {
     let responseMessage = '';
+    console.log('NEW EVENT');
+    console.log(action);
     switch (action) {
         case "parking":
             responseMessage = yield parking_1.findNearestParkingSpot(parameters['address']);
