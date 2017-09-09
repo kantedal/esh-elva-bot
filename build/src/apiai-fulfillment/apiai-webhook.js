@@ -20,7 +20,7 @@ exports.resolveMessage = (action, parameters) => tslib_1.__awaiter(this, void 0,
             break;
         case "learnSwedish":
             console.log(`user wants to learn swedish as a ${parameters['swedishLevel']}`);
-            responseMessage = yield immigrant_1.getSwedishDirections(parameters['swedishLevel']);
+            responseMessage = yield immigrant_1.getSwedishDirections(parameters['swedishLevel'].toLowerCase());
             break;
         default:
             responseMessage = 'Something went wrong, sorry!';
