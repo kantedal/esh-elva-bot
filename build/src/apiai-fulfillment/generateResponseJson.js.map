@@ -1,1 +1,0 @@
-{"version":3,"file":"generateResponseJson.js","sourceRoot":"","sources":["../../../src/apiai-fulfillment/generateResponseJson.ts"],"names":[],"mappings":";;AAMa,QAAA,oBAAoB,GAAG,CAAC,OAAe;IAClD,MAAM,CAAC;QACL,MAAM,EAAE,OAAO;QACf,WAAW,EAAE,OAAO;KACrB,CAAA;AACH,CAAC,CAAA"}

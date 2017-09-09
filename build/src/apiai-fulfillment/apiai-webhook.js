@@ -15,12 +15,9 @@ exports.resolveMessage = (action, parameters) => tslib_1.__awaiter(this, void 0,
             break;
         case "integration":
             break;
-<<<<<<< HEAD
-=======
         case "immigrantEvent":
             responseMessage = yield immigrantEvent_1.getRandomEventForImmigrants();
             break;
->>>>>>> d64d885e3365bf0b81a7346255dbaff3eaead9b3
         default:
             responseMessage = 'Something went wrong, sorry!';
             break;

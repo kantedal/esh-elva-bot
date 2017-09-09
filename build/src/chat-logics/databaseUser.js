@@ -29,18 +29,6 @@ exports.getDatabaseUser = (userId, sessionId) => {
             newUserRef.set(newUser);
             resolve(newUser);
         });
-        usersRef.orderByChild('sessionId').equalTo(sessionId).limitToFirst(1).once('value', (snapshot) => {
-            const users = snapshot.val();
-            for (const userKey in users) {
-                if (userKey != null) {
-                    const user = users[userKey];
-                    if (user) {
-                        console.log(user);
-                        return;
-                    }
-                }
-            }
-        });
     });
 };
 exports.getUserFromSessionId = (sessionId) => {
