@@ -18,9 +18,18 @@ const enum Actions {
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<IResponseJson> => {
   let responseMessage = ''
+  let contextOut = []
 
   switch (action) {
     case Actions.parking:
+      contextOut = [
+        {
+          name: 'input-test',
+          parameters: {
+            address: 'Ryds allé 19',
+          }
+        }
+      ]
       responseMessage = await findNearestParkingSpot(parameters['address'])
       break
     case Actions.integration:
@@ -46,7 +55,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       break
   }
 
-  return generateResponseJson(responseMessage)
+  return generateResponseJson(responseMessage, contextOut)
 }
 
 export const initApiAiWebhook = async (app: express.Application) => {
@@ -54,11 +63,12 @@ export const initApiAiWebhook = async (app: express.Application) => {
   app.post('/apiai', async (req: express.Request, res: any) => {
     const body = req.body
 
+    console.log(body)
     const action = body.result.action
     const parameters = body.result.parameters
+
     // const conexts = body.results.contexts
     console.log('session id', body.sessionId)
-
     console.log('Action: ', action, 'Parameters: ', parameters)
 
     const user: any = await getUserFromSessionId(body.sessionId)
