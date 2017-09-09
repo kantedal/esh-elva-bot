@@ -6,14 +6,19 @@ import {findPointOfIntrest} from './actions/pointOfIntrest'
 const enum Actions {
   parking = 'parking',
   address = 'address',
+  integration = 'integration'
 }
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<IResponseJson> => {
   let responseMessage = ''
+  console.log('NEW EVENT')
+  console.log(action)
 
   switch (action) {
     case Actions.parking:
       responseMessage = await findNearestParkingSpot(parameters['address'])
+      break
+    case Actions.integration:
       break
     default:
       responseMessage = 'Something went wrong, sorry!'
@@ -31,6 +36,7 @@ export const initApiAiWebhook = async (app: express.Application) => {
     const action = body.result.action
     const parameters = body.result.parameters
     // const conexts = body.results.contexts
+    console.log('session id', body.sessionId)
 
     console.log('Action: ', action, 'Parameters: ', parameters)
 

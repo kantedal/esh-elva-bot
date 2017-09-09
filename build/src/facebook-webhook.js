@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const request = require('request');
-const token = 'EAAVvTioZBgqYBACMJZCAP92BiHRw9NNL0sLqXAFVrkYv4W2Muc1i6VNZC8bo3Li80RUZA07SeXKqLcXLJZAL5qM70ZCcuyi24MIZCRr8stTQXt74ha7TgFP58RoZBXDQxisqMd8NTZAVoZATuwLcoQI6K9zZBNvzPWvF40l7MGkuoYQBwZDZD';
+const token = 'EAAVvTioZBgqYBAKjMA5ZBPjTl3zIY1klJzd3aeePmEoaSvIGdp8dDouen0b9mJNQ4lDkdb9eVhKpN1I1omSuzIFeBup3e77KM2IqdWxrfgDobbXlT8VuGJw79dx8aZAKAi3agv6QNUu9MtTnfxk105Don0ycrwaDOfq0ahyegZDZD';
 exports.initFacebookMessengerWebhook = (app) => {
     app.get('/', (req, res) => {
         res.send('Hi, I am Elva...  ');
+        console.log('Hi I am Elva');
     });
     app.get('/webhook/', (req, res) => {
         if (req.query['hub.verify_token'] === 'detejubaraetthack') {
@@ -13,6 +14,7 @@ exports.initFacebookMessengerWebhook = (app) => {
         res.send('Wrong token.');
     });
     app.post('/webhook/', (req, res) => {
+        console.log('Inne!');
         const messaging_events = req.body.entry[0].messaging;
         for (const event of messaging_events) {
             const sender = event.sender.id;
