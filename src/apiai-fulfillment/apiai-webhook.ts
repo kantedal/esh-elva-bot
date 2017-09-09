@@ -2,11 +2,14 @@ import * as express from 'express'
 import {findNearestParkingSpot} from './actions/parking'
 import {generateResponseJson, IResponseJson} from './generateResponseJson'
 import {findPointOfIntrest} from './actions/pointOfIntrest'
+import {getRandomEventForImmigrants} from './actions/immigrantEvent'
+import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 
 const enum Actions {
   parking = 'parking',
   address = 'address',
-  integration = 'integration'
+  integration = 'integration',
+  immigrantEvent = 'immigrantEvent'
 }
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<IResponseJson> => {
@@ -19,6 +22,9 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseMessage = await findNearestParkingSpot(parameters['address'])
       break
     case Actions.integration:
+      break
+    case Actions.immigrantEvent:
+      responseMessage = await getRandomEventForImmigrants()
       break
     default:
       responseMessage = 'Something went wrong, sorry!'
@@ -36,9 +42,12 @@ export const initApiAiWebhook = async (app: express.Application) => {
     const action = body.result.action
     const parameters = body.result.parameters
     // const conexts = body.results.contexts
-    console.log(body)
+    console.log('session id', body.sessionId)
 
     console.log('Action: ', action, 'Parameters: ', parameters)
+
+    const user: any = await getUserFromSessionId(body.sessionId)
+    console.log('user', user)
 
     const response: IResponseJson = await resolveMessage(action, parameters)
 

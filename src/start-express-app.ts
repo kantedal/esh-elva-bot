@@ -13,5 +13,19 @@ export const startExpressApp = (): Promise<express.Application> => {
       console.log(`App listening on ${process.env.PORT || 5000}`)
       resolve(app)
     })
+
+    // Routes
+    app.get('/', (req, res) => {
+        res.send('Hi, I am Elva.')
+    })
+
+    // Facebook
+    app.get('/webhook/', (req, res) => {
+        if(req.query['hub.verify_token'] === 'detejubaraetthack') {
+            res.send(req.query['hub.challenge'])
+        }
+        res.send('Wrong token.')
+    })
+
   })
 }
