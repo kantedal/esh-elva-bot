@@ -39,6 +39,8 @@ export const sendMessage = async (message: string, sessionToken: string, databas
         const responseMessage = response.result.fulfillment.speech
         const translatedResponseMessage = await translateMessage(responseMessage, 'sv')
 
+        console.log('message successfully sent')
+        console.log(response)
         setSessionId(databaseUser.userId, response.sessionId)
 
         resolve(translatedResponseMessage)

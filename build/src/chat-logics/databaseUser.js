@@ -18,6 +18,7 @@ exports.getDatabaseUser = (userId, sessionId) => {
                 if (userKey != null) {
                     const user = users[userKey];
                     if (user) {
+                        admin.database().ref('users/' + userKey + '/sessionId/').set(sessionId);
                         resolve(user);
                         return;
                     }
