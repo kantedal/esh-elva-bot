@@ -1,0 +1,1 @@
+{"version":3,"file":"translate.js","sourceRoot":"","sources":["../../../src/chat-logics/translate.ts"],"names":[],"mappings":";;;AAAA,MAAM,SAAS,GAAG,OAAO,CAAC,sBAAsB,CAAC,CAAA;AAEpC,QAAA,gBAAgB,GAAG,CAAO,OAAe,EAAE,EAAU,EAAE,IAAa;IAC/E,MAAM,QAAQ,GAAG,MAAM,SAAS,CAAC,OAAO,EAAE,EAAE,EAAE,EAAE,CAAC,CAAA;IACjD,MAAM,CAAC,QAAQ,CAAC,IAAI,CAAA;AACtB,CAAC,CAAA,CAAA"}
