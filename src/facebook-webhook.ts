@@ -7,9 +7,9 @@ const access_token: string = process.env.FACEBOOK_PAGE_ACCESS_TOKEN
 const verify_token: string = process.env.MESSENGER_VERIFY_TOKEN
 
 export const initFacebookMessengerWebhook = (app: express.Application) => {
-  app.get('/', (req, res) => {
-    res.send('Hi, I am Elva...  ')
-    console.log('Hi I am Elva')
+  app.get('/', async (req, res) => {
+    const responseMessage: string = await sendMessage('hi', 'session-token', { userId: 'heja blavitt!!'})
+    res.send(responseMessage)
   })
 
   // Facebook
@@ -28,8 +28,7 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
       const sender = event.sender.id
       if(event.message && event.message.text) {
         const text = event.message.text
-        console.log('hej')
-        const responseMessage: string = 'hej' // await sendMessage(text, 'session-token', { userId: 'heja blavitt!!'})
+        const responseMessage: string = await sendMessage(text, 'session-token', { userId: 'heja blavitt!!'})
         sendText(sender, responseMessage)
       }
     }
