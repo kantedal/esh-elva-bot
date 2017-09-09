@@ -3,7 +3,7 @@ const Distance = require('geo-distance')
 import * as moment from 'moment'
 import {geocodeAddress} from './address'
 
-const parkingApiKey = 'a3125192c5304579b1ac5104938aa761'
+const parkingApiKey: string = process.env.PARKING_API_KEY
 const parkingApiAddress = 'http://parkering.linkoping.se/Parkeringsdata/ParkeringsdataV1.svc/GetParkeringsytaList/'
 
 export interface IParking {

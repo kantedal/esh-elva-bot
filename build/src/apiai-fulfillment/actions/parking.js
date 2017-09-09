@@ -4,7 +4,7 @@ const tslib_1 = require("tslib");
 const request = require("request-promise");
 const Distance = require('geo-distance');
 const address_1 = require("./address");
-const parkingApiKey = 'a3125192c5304579b1ac5104938aa761';
+const parkingApiKey = process.env.PARKING_API_KEY;
 const parkingApiAddress = 'http://parkering.linkoping.se/Parkeringsdata/ParkeringsdataV1.svc/GetParkeringsytaList/';
 exports.findNearestParkingSpot = (address) => tslib_1.__awaiter(this, void 0, void 0, function* () {
     try {

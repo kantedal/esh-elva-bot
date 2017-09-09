@@ -4,7 +4,7 @@ const tslib_1 = require("tslib");
 const translate_1 = require("./translate");
 const apiai = require('apiai');
 const translate = require('google-translate-api');
-const app = apiai('414d7edb81324f84ab648cbbe1701c0f');
+const app = apiai(process.env.APIAI_API_KEY);
 exports.sendMessage = (message, sessionToken, databaseUser) => tslib_1.__awaiter(this, void 0, void 0, function* () {
     const translatedMessage = message;
     return new Promise((resolve, reject) => {

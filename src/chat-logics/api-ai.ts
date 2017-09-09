@@ -3,7 +3,7 @@ import {translateMessage} from './translate'
 const apiai = require('apiai')
 const translate = require('google-translate-api')
 
-const app = apiai('414d7edb81324f84ab648cbbe1701c0f')
+const app = apiai(process.env.APIAI_API_KEY)
 
 export const sendMessage = async (message: string, sessionToken: string, databaseUser: IUser) => {
   const translatedMessage = message // await translateMessage(message, 'en')

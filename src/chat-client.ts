@@ -6,6 +6,9 @@ export const startChatClient = () => {
   const server = require('http').createServer()
   const io = SocketIO(server)
 
+  console.log('HEJ')
+  console.log(process.env.APIAI_AI_KEY)
+
   io.on('connection', (client) => {
     let sessionToken: string
     let databaseUser: IUser
