@@ -7,6 +7,7 @@ import {initApiAiWebhook} from './apiai-fulfillment/apiai-webhook'
 import {findPublicTransport} from './apiai-fulfillment/actions/public-transport'
 import {sendMessage} from './chat-logics/api-ai'
 import {initFacebookMessengerWebhook} from './facebook-webhook'
+import {findPointOfInterest} from './apiai-fulfillment/actions/pointOfIntrest'
 
 export let apiaiApp
 
@@ -20,6 +21,8 @@ const startServer = async (): Promise<void> => {
   initApiAiWebhook(App)
   startChatClient()
   initFacebookMessengerWebhook(App)
+
+  setTimeout(() => initFacebookMessengerWebhook(App), 2000)
 }
 
 startServer()
