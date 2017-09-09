@@ -31,7 +31,7 @@ npm run watch && npm run dev
 ```
 
 ## Deploy
-Merge the master branch to the deploy branch and make sure to commit the changed build files.
+We merge the master branch to the deploy branch and have a Heroku hook that builds
 
 ## Available scripts
 
