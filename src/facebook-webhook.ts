@@ -1,15 +1,16 @@
 import * as express from 'express'
 import {error} from 'util'
 import {sendMessage} from './chat-logics/api-ai'
+import {getWeather} from './apiai-fulfillment/actions/weather'
 
 const request = require('request')
 const access_token: string = process.env.FACEBOOK_PAGE_ACCESS_TOKEN
 const verify_token: string = process.env.MESSENGER_VERIFY_TOKEN
 
 export const initFacebookMessengerWebhook = (app: express.Application) => {
-  app.get('/', async (req, res) => {
-    const responseMessage: string = await sendMessage('hi', 'session-token', { userId: 'heja blavitt!!'})
-    res.send(responseMessage)
+  app.get('/hej/', async (req, res) => {
+
+    res.send()
   })
 
   // Facebook

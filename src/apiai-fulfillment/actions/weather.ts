@@ -29,26 +29,25 @@ export const getWeather = async (address?: string) => {
       for(const parameter of weatherParameters){
         if (parameter.name === 't') { // Temperature
           temp = parameter.values[0]
-          weatherMessage += 'Currently we have a temperature of' + temp + ' °C degrees.'
+          weatherMessage += 'Currently it is' + temp + '°C degrees.'
         }
       }
 
       for(const parameter of weatherParameters){
-
         if (parameter.name === 'tcc_mean') { // Cloudy
           sky = parameter.values[0]
-          if (sky < 3) {weatherMessage += '☀'}
-          else if (sky < 6) {weatherMessage += '⛅'}
-          else {weatherMessage += '☁'}
+          if (sky < 3) {weatherMessage += '☀ '}
+          else if (sky < 6) {weatherMessage += '⛅ '}
+          else {weatherMessage += '☁ '}
         } else if (parameter.name === 'pmean') { // Rain
           rain = parameter.values[0]
-          if (rain > 0) {weatherMessage += '☔'}
+          if (rain > 0) {weatherMessage += '☔ '}
         } else if (parameter.name === 'ws') { // Wind
           wind = parameter.values[0]
-          if (wind > 5) {weatherMessage += '💨'}
+          if (wind > 5) {weatherMessage += '💨 '}
         } else if (parameter.name === 'tstm') {  // Thunder
           thunder = parameter.values[0]
-          if (thunder > 50) {weatherMessage += '⚡'}
+          if (thunder > 50) {weatherMessage += '⚡ '}
         }
       }
 
