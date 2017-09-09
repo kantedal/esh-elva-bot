@@ -18,12 +18,12 @@ export const findPointOfInterest = async (type: string) => {
     parseXMLString(res1, (err, res2) => {
       if (err) {
         console.log(err)
-        return err.toString()
+        err.toString()
       }
 
       let pointsOfInterest = res2['wfs:FeatureCollection']
       if (!pointsOfInterest) {
-        return reject(`Could not find results for ${type}`)
+        reject(`Could not find results for ${type}`)
       }
 
       pointsOfInterest = pointsOfInterest['gml:featureMember']
@@ -67,7 +67,7 @@ export const findPointOfInterest = async (type: string) => {
     .then((response) => response)
     .catch((reason) => {
       console.error(reason)
-      return reason.toString()
+      return reason.toString() || ''
     })
   })
 }
