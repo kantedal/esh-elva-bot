@@ -38,6 +38,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseMessage = await findPointOfInterest(param)
       break
     case Actions.transport:
+      console.log('transport action', parameters['from-address'], parameters['to-address'])
       responseMessage = await findPublicTransport(parameters['from-address'], parameters['to-address'])
       break
     default:
