@@ -36,7 +36,7 @@ export const initApiAiWebhook = async (app: express.Application) => {
     const action = body.result.action
     const parameters = body.result.parameters
     // const conexts = body.results.contexts
-    console.log(body)
+    console.log('session id', body.sessionId)
 
     console.log('Action: ', action, 'Parameters: ', parameters)
 
