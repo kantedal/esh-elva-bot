@@ -29,7 +29,7 @@ export const getWeather = async (address?: string) => {
       for(const parameter of weatherParameters){
         if (parameter.name === 't') { // Temperature
           temp = parameter.values[0]
-          weatherMessage += 'Currently it is' + temp + '°C degrees.'
+          weatherMessage += 'Currently it is' + temp + '°C degrees. ☀'
         }
       }
 
