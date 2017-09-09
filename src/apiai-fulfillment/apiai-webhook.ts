@@ -27,7 +27,8 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
           name: 'input-test',
           parameters: {
             address: 'Ryds allé 19',
-          }
+          },
+          lifespan: 10
         }
       ]
       responseMessage = await findNearestParkingSpot(parameters['address'])
