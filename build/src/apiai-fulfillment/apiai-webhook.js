@@ -4,6 +4,7 @@ const tslib_1 = require("tslib");
 const parking_1 = require("./actions/parking");
 const generateResponseJson_1 = require("./generateResponseJson");
 const immigrantEvent_1 = require("./actions/immigrantEvent");
+const databaseUser_1 = require("../chat-logics/databaseUser");
 exports.resolveMessage = (action, parameters) => tslib_1.__awaiter(this, void 0, void 0, function* () {
     let responseMessage = '';
     console.log('NEW EVENT');
@@ -28,8 +29,10 @@ exports.initApiAiWebhook = (app) => tslib_1.__awaiter(this, void 0, void 0, func
         const body = req.body;
         const action = body.result.action;
         const parameters = body.result.parameters;
-        console.log(body);
+        console.log('session id', body.sessionId);
         console.log('Action: ', action, 'Parameters: ', parameters);
+        const user = yield databaseUser_1.getUserFromSessionId(body.sessionId);
+        console.log('user', user);
         const response = yield exports.resolveMessage(action, parameters);
         res.send(JSON.stringify(response));
     }));
