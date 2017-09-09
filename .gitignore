@@ -24,3 +24,6 @@ coverage
 
 # Misc
 .DS_Store
+
+# keys
+.env
