@@ -16,29 +16,49 @@ export interface IUser {
   coordinates?: { lon: number, lat: number }
   preferredLanguage?: 'EN' | 'SV'
 }
-export const getDatabaseUser = (userId: string): Promise<IUser> => {
+
+export const getDatabaseUser = (userId: string, sessionId: string): Promise<IUser> => {
   const usersRef = admin.database().ref('users')
   return new Promise<IUser>((resolve, reject) => {
     // Fetch user with user id
     usersRef.orderByChild('userId').equalTo(userId).limitToFirst(1).once('value', (snapshot) => {
       const users = snapshot.val()
+
       for (const userKey in users) {
         if (userKey != null) {
           const user = users[userKey]
 
           // User exists
           if (user) {
+            admin.database().ref('users/' + userKey + '/sessionId/').set(sessionId)
             resolve(user)
             return
           }
         }
       }
 
-      const newUser = { userId }
+      const newUser = { userId, sessionId }
       const newUserRef = usersRef.push()
       newUserRef.set(newUser)
 
       resolve(newUser)
     })
+
+    usersRef.orderByChild('sessionId').equalTo(sessionId).limitToFirst(1).once('value', (snapshot) => {
+      const users = snapshot.val()
+
+      for (const userKey in users) {
+        if (userKey != null) {
+          const user = users[userKey]
+
+          // User exists
+          if (user) {
+            console.log(user)
+            return
+          }
+        }
+      }
+    })
+
   })
 }

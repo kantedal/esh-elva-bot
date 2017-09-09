@@ -1,3 +1,5 @@
+import {initFacebookMessengerWebhook} from './facebook-webhook';
+
 require('dotenv').config()
 import {startChatClient} from './chat-client'
 import {startExpressApp} from './start-express-app'
@@ -8,6 +10,7 @@ const startServer = async (): Promise<void> => {
   const App: express.Application = await startExpressApp()
   initApiAiWebhook(App)
   startChatClient()
+  initFacebookMessengerWebhook(App)
 }
 
 startServer()
