@@ -23,7 +23,7 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
     })
 
     app.post('/messenger-webhook/', async (req, res) => {
-        console.log('inne!')
+        console.log(req)
         const messaging_events = req.body.entry[0].messaging
 
         for(const event of messaging_events){

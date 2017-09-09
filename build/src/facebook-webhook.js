@@ -15,7 +15,7 @@ exports.initFacebookMessengerWebhook = (app) => {
         res.send('Wrong token.');
     });
     app.post('/messenger-webhook/', (req, res) => tslib_1.__awaiter(this, void 0, void 0, function* () {
-        console.log('inne!');
+        console.log(req);
         const messaging_events = req.body.entry[0].messaging;
         for (const event of messaging_events) {
             const sender = event.sender.id;
