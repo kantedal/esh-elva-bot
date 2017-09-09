@@ -19,7 +19,10 @@
     "strictNullChecks": false,
     "declaration": true,
     "types": [
-      "socket.io"
+      "socket.io",
+      "node",
+      "request-promise",
+      "moment"
     ]
   },
   "include": [
