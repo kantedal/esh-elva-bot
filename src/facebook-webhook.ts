@@ -7,7 +7,6 @@ const request = require('request')
 const token = 'EAAVvTioZBgqYBAOzdiUFVcT0wIPVPPz36wGFIpF3DJHUQYP3nVyMjpabOD5bvialwy0qVwcoilXj8cNJfockId9qkR9WCzZC8JS8WDfxZBfcd3DkZBBirZCWjjyiynRR45X36MF1YZC2au6pq5VcrZBZBZBU7XFQPpSGZCnzWJzf9uTgZDZD'
 
 export const initFacebookMessengerWebhook = (app: express.Application) => {
-
     app.get('/', (req, res) => {
         res.send('Hi, I am Elva...  ')
         console.log('Hi I am Elva')
@@ -23,7 +22,7 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
     })
 
     app.post('/messenger-webhook/', async (req, res) => {
-        console.log(req.body.entry[0])
+        console.log(req.body.entry[0].messaging[0].sender)
         const messaging_events = req.body.entry[0].messaging
 
         for(const event of messaging_events){
