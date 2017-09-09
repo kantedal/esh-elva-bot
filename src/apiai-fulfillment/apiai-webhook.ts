@@ -44,6 +44,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
     case Actions.test:
       return {
         speech: 'Amount contains K',
+        displayText: 'Amount contains K',
         followupEvent: {
           data: {
             testttest: 'testing testing',
