@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const parking_1 = require("./actions/parking");
 const generateResponseJson_1 = require("./generateResponseJson");
-const immigrantEvent_1 = require("./actions/immigrantEvent");
+const immigrant_1 = require("./actions/immigrant");
 const databaseUser_1 = require("../chat-logics/databaseUser");
 exports.resolveMessage = (action, parameters) => tslib_1.__awaiter(this, void 0, void 0, function* () {
     let responseMessage = '';
@@ -16,7 +16,11 @@ exports.resolveMessage = (action, parameters) => tslib_1.__awaiter(this, void 0,
         case "integration":
             break;
         case "immigrantEvent":
-            responseMessage = yield immigrantEvent_1.getRandomEventForImmigrants();
+            responseMessage = yield immigrant_1.getRandomEventForImmigrants();
+            break;
+        case "learnSwedish":
+            console.log(`user wants to learn swedish as a ${parameters['swedishLevel']}`);
+            responseMessage = yield immigrant_1.getSwedishDirections(parameters['swedishLevel']);
             break;
         default:
             responseMessage = 'Something went wrong, sorry!';
