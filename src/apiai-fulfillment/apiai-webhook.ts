@@ -5,6 +5,7 @@ import {findPointOfInterest} from './actions/pointOfIntrest'
 import {getRandomEventForImmigrants, getSwedishDirections} from './actions/immigrant'
 import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 import {findPublicTransport} from './actions/public-transport'
+import {getWeather} from './actions/weather'
 
 const enum Actions {
   parking = 'parking',
@@ -14,6 +15,7 @@ const enum Actions {
   learnSwedish = 'learnSwedish',
   poiAsTourist = 'poiAsTourist',
   transport = 'transport',
+  weather = 'weather',
   test = 'test'
 }
 
@@ -40,6 +42,9 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
     case Actions.transport:
       console.log('transport action', parameters['from-address'], parameters['to-address'])
       responseMessage = await findPublicTransport(parameters['from-address'], parameters['to-address'])
+      break
+    case Actions.weather:
+      responseMessage = await getWeather()
       break
     case Actions.test:
       console.log('test action')

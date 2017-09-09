@@ -3,12 +3,12 @@ import request = require('request-promise')
 
 const Distance = require('geo-distance')
 
-export const getWeather = async (address: string, lon?: string, lat?: string) => {
+export const getWeather = async (address?: string) => {
   try {
     let weatherCoordinate = null
     let weatherApiAddress = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/15.513/lat/58.417/data.json'
 
-    if(lon !== undefined || lat !== undefined) {
+    if(address !== undefined) {
       const userGeoCode = await geocodeAddress(address)
       weatherCoordinate = { lon: userGeoCode.longitude, lat: userGeoCode.latitude }
       weatherApiAddress = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/'
