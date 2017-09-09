@@ -13,5 +13,7 @@ export const startExpressApp = (): Promise<express.Application> => {
       console.log(`App listening on ${process.env.PORT || 5000}`)
       resolve(app)
     })
+
+
   })
 }

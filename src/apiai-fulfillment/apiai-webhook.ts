@@ -2,21 +2,34 @@ import * as express from 'express'
 import {findNearestParkingSpot} from './actions/parking'
 import {generateResponseJson, IResponseJson} from './generateResponseJson'
 import {findPointOfIntrest} from './actions/pointOfIntrest'
+import {getRandomEventForImmigrants, getSwedishDirections} from './actions/immigrant'
+import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 
 const enum Actions {
   parking = 'parking',
   address = 'address',
-  integration = 'integration'
+  integration = 'integration',
+  immigrantEvent = 'immigrantEvent',
+  learnSwedish = 'learnSwedish'
 }
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<IResponseJson> => {
   let responseMessage = ''
+  console.log('NEW EVENT')
+  console.log(action)
 
   switch (action) {
     case Actions.parking:
       responseMessage = await findNearestParkingSpot(parameters['address'])
       break
     case Actions.integration:
+      break
+    case Actions.immigrantEvent:
+      responseMessage = await getRandomEventForImmigrants()
+      break
+    case Actions.learnSwedish:
+      console.log(`user wants to learn swedish as a ${parameters['swedishLevel']}`)
+      responseMessage = await getSwedishDirections(parameters['swedishLevel'].toLowerCase())
       break
     default:
       responseMessage = 'Something went wrong, sorry!'
@@ -34,9 +47,12 @@ export const initApiAiWebhook = async (app: express.Application) => {
     const action = body.result.action
     const parameters = body.result.parameters
     // const conexts = body.results.contexts
-    console.log(body)
+    console.log('session id', body.sessionId)
 
     console.log('Action: ', action, 'Parameters: ', parameters)
+
+    const user: any = await getUserFromSessionId(body.sessionId)
+    console.log('user', user)
 
     const response: IResponseJson = await resolveMessage(action, parameters)
 

@@ -44,6 +44,12 @@ export const getDatabaseUser = (userId: string, sessionId: string): Promise<IUse
       resolve(newUser)
     })
 
+  })
+}
+
+export const getUserFromSessionId = (sessionId: string) => {
+  return new Promise<any>((resolve, reject) => {
+    const usersRef = admin.database().ref('users')
     usersRef.orderByChild('sessionId').equalTo(sessionId).limitToFirst(1).once('value', (snapshot) => {
       const users = snapshot.val()
 
@@ -53,12 +59,33 @@ export const getDatabaseUser = (userId: string, sessionId: string): Promise<IUse
 
           // User exists
           if (user) {
-            console.log(user)
+            resolve(user)
             return
           }
         }
       }
+      resolve({})
     })
+  })
+}
 
+export const setSessionId = (userId: string, sessionId: string) => {
+  const usersRef = admin.database().ref('users')
+  return new Promise<void>((resolve, reject) => {
+    // Fetch user with user id
+    usersRef.orderByChild('userId').equalTo(userId).limitToFirst(1).once('value', (snapshot) => {
+      const users = snapshot.val()
+      for (const userKey in users) {
+        if (userKey != null) {
+          const user = users[userKey]
+          if (user) {
+            admin.database().ref('users/' + userKey + '/sessionId/').set(sessionId)
+            resolve()
+            return
+          }
+        }
+      }
+      resolve()
+    })
   })
 }
