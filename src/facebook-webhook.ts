@@ -36,9 +36,6 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
     res.sendStatus(200)
   })
 
-  // app.listen(app.get('port'), () => {
-  //   console.log('running: port')
-  // })
 }
 
 const sendText = (sender, text) => {
@@ -53,4 +50,3 @@ const sendText = (sender, text) => {
     }
   })
 }
-
