@@ -10,6 +10,8 @@ const enum Actions {
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<IResponseJson> => {
   let responseMessage = ''
+  console.log('NEW EVENT')
+  console.log(action)
 
   switch (action) {
     case Actions.parking:
