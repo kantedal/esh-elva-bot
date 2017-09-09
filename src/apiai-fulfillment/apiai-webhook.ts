@@ -67,11 +67,8 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
 export const initApiAiWebhook = async (app: express.Application) => {
   // findPointOfInterest()
   app.post('/apiai', async (req: express.Request, res: any) => {
-    const body = req.body
-
-    console.log(body)
-    const action = body.result.action
-    const parameters = body.result.parameters
+    const { body } = req
+    const { action, parameters } = body.result
 
     // const conexts = body.results.contexts
     console.log('session id', body.sessionId)

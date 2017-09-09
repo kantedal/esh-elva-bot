@@ -11,6 +11,7 @@ admin.initializeApp({
 
 export interface IUser {
   userId: string
+  sessionId: string
   firstName?: string
   lastName?: string
   coordinates?: { lon: number, lat: number }
