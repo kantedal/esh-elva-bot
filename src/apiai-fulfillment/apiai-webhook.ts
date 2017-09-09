@@ -42,12 +42,13 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseMessage = await findPublicTransport(parameters['from-address'], parameters['to-address'])
       break
     case Actions.test:
+      console.log('test action')
       return {
         speech: 'Amount contains K',
         displayText: 'Amount contains K',
         followupEvent: {
           data: {
-            testttest: 'testing testing',
+            testtest: 'testing testing',
           },
           name: 'fill_slots'
         }
