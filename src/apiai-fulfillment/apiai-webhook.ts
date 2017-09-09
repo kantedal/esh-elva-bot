@@ -13,24 +13,15 @@ const enum Actions {
   immigrantEvent = 'immigrantEvent',
   learnSwedish = 'learnSwedish',
   poiAsTourist = 'poiAsTourist',
-  transport = 'transport'
+  transport = 'transport',
+  test = 'test'
 }
 
-export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<IResponseJson> => {
+export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<any> => {
   let responseMessage = ''
-  let contextOut = []
 
   switch (action) {
     case Actions.parking:
-      contextOut = [
-        {
-          name: 'input-test',
-          parameters: {
-            address: 'Ryds allé 19',
-          },
-          lifespan: 10
-        }
-      ]
       responseMessage = await findNearestParkingSpot(parameters['address'])
       break
     case Actions.integration:
@@ -51,12 +42,22 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       console.log('transport action', parameters['from-address'], parameters['to-address'])
       responseMessage = await findPublicTransport(parameters['from-address'], parameters['to-address'])
       break
+    case Actions.test:
+      return {
+        speech: 'Amount contains K',
+        followupEvent: {
+          data: {
+            testttest: 'testing testing',
+          },
+          name: 'fill_slots'
+        }
+      }
     default:
       responseMessage = 'Something went wrong, sorry!'
       break
   }
 
-  return generateResponseJson(responseMessage, contextOut)
+  return generateResponseJson(responseMessage)
 }
 
 export const initApiAiWebhook = async (app: express.Application) => {
