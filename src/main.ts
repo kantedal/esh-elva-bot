@@ -19,9 +19,7 @@ const startServer = async (): Promise<void> => {
 
   initApiAiWebhook(App)
   startChatClient()
-
-  setTimeout(() => initFacebookMessengerWebhook(App), 2000)
-
+  initFacebookMessengerWebhook(App)
 }
 
 startServer()
