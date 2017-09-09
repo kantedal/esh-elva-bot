@@ -3,8 +3,8 @@ import {error} from 'util'
 import {sendMessage} from "./chat-logics/api-ai";
 
 const request = require('request')
-// const token: string = process.env.FACEBOOK_PAGE_ACCESS_TOKEN
-const token = 'EAAVvTioZBgqYBAOzdiUFVcT0wIPVPPz36wGFIpF3DJHUQYP3nVyMjpabOD5bvialwy0qVwcoilXj8cNJfockId9qkR9WCzZC8JS8WDfxZBfcd3DkZBBirZCWjjyiynRR45X36MF1YZC2au6pq5VcrZBZBZBU7XFQPpSGZCnzWJzf9uTgZDZD'
+const access_token: string = process.env.FACEBOOK_PAGE_ACCESS_TOKEN
+const verify_token: string = process.env.MESSENGER_VERIFY_TOKEN
 
 export const initFacebookMessengerWebhook = (app: express.Application) => {
     app.get('/', (req, res) => {
@@ -15,7 +15,7 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
 
     // Facebook
     app.get('/messenger-webhook/', (req, res) => {
-        if(req.query['hub.verify_token'] === 'detejubaraetthack') {
+        if(req.query['hub.verify_token'] === verify_token) {
             res.send(req.query['hub.challenge'])
         }
         res.send('Wrong token.')
@@ -46,7 +46,7 @@ const sendText = (sender, text) => {
     const messageData = {text}
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-        qs: {access_token: token},
+        qs: {access_token: access_token},
         method: 'POST',
         json: {
             recipient: {id: sender},
