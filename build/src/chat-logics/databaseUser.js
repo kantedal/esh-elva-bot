@@ -9,7 +9,7 @@ admin.initializeApp({
     }),
     databaseURL: 'https://elva-ac7f6.firebaseio.com'
 });
-exports.getDatabaseUser = (userId) => {
+exports.getDatabaseUser = (userId, sessionId) => {
     const usersRef = admin.database().ref('users');
     return new Promise((resolve, reject) => {
         usersRef.orderByChild('userId').equalTo(userId).limitToFirst(1).once('value', (snapshot) => {
@@ -18,15 +18,28 @@ exports.getDatabaseUser = (userId) => {
                 if (userKey != null) {
                     const user = users[userKey];
                     if (user) {
+                        admin.database().ref('users/' + userKey + '/sessionId/').set(sessionId);
                         resolve(user);
                         return;
                     }
                 }
             }
-            const newUser = { userId };
+            const newUser = { userId, sessionId };
             const newUserRef = usersRef.push();
             newUserRef.set(newUser);
             resolve(newUser);
+        });
+        usersRef.orderByChild('sessionId').equalTo(sessionId).limitToFirst(1).once('value', (snapshot) => {
+            const users = snapshot.val();
+            for (const userKey in users) {
+                if (userKey != null) {
+                    const user = users[userKey];
+                    if (user) {
+                        console.log(user);
+                        return;
+                    }
+                }
+            }
         });
     });
 };

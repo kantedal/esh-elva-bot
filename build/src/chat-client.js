@@ -12,7 +12,7 @@ exports.startChatClient = () => {
         let databaseUser;
         client.on('connectUser', (data) => {
             sessionToken = data.sessionToken;
-            databaseUser_1.getDatabaseUser(data.userId).then((user) => {
+            databaseUser_1.getDatabaseUser(data.userId, sessionToken).then((user) => {
                 databaseUser = user;
                 client.emit('userConnected');
             });
