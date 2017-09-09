@@ -1,7 +1,7 @@
 import * as express from 'express'
 import {findNearestParkingSpot} from './actions/parking'
 import {generateResponseJson, IResponseJson} from './generateResponseJson'
-import {findPointOfIntrest} from './actions/pointOfIntrest'
+import {findPointOfInterest} from './actions/pointOfIntrest'
 import {getRandomEventForImmigrants, getSwedishDirections} from './actions/immigrant'
 import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 
@@ -10,13 +10,12 @@ const enum Actions {
   address = 'address',
   integration = 'integration',
   immigrantEvent = 'immigrantEvent',
-  learnSwedish = 'learnSwedish'
+  learnSwedish = 'learnSwedish',
+  poiAsTourist = 'poiAsTourist'
 }
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<IResponseJson> => {
   let responseMessage = ''
-  console.log('NEW EVENT')
-  console.log(action)
 
   switch (action) {
     case Actions.parking:
@@ -28,8 +27,13 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseMessage = await getRandomEventForImmigrants()
       break
     case Actions.learnSwedish:
-      console.log(`user wants to learn swedish as a ${parameters['swedishLevel']}`)
       responseMessage = await getSwedishDirections(parameters['swedishLevel'].toLowerCase())
+      break
+    case Actions.poiAsTourist:
+      const param = parameters['point_of_interest'] || parameters['point_of_interest_any']
+      console.log(`The param is:`)
+      console.log(param)
+      responseMessage = await findPointOfInterest(param)
       break
     default:
       responseMessage = 'Something went wrong, sorry!'
@@ -40,7 +44,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
 }
 
 export const initApiAiWebhook = async (app: express.Application) => {
-  // findPointOfIntrest()
+  // findPointOfInterest()
   app.post('/apiai', async (req: express.Request, res: any) => {
     const body = req.body
 
