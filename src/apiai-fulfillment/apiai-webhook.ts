@@ -29,7 +29,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       break
     case Actions.learnSwedish:
       console.log(`user wants to learn swedish as a ${parameters['swedishLevel']}`)
-      responseMessage = await getSwedishDirections(parameters['swedishLevel'])
+      responseMessage = await getSwedishDirections(parameters['swedishLevel'].toLowerCase())
       break
     default:
       responseMessage = 'Something went wrong, sorry!'
