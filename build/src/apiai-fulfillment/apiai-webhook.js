@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const parking_1 = require("./actions/parking");
 const generateResponseJson_1 = require("./generateResponseJson");
+const immigrantEvent_1 = require("./actions/immigrantEvent");
+const databaseUser_1 = require("../chat-logics/databaseUser");
 exports.resolveMessage = (action, parameters) => tslib_1.__awaiter(this, void 0, void 0, function* () {
     let responseMessage = '';
     console.log('NEW EVENT');
@@ -13,6 +15,12 @@ exports.resolveMessage = (action, parameters) => tslib_1.__awaiter(this, void 0,
             break;
         case "integration":
             break;
+<<<<<<< HEAD
+=======
+        case "immigrantEvent":
+            responseMessage = yield immigrantEvent_1.getRandomEventForImmigrants();
+            break;
+>>>>>>> d64d885e3365bf0b81a7346255dbaff3eaead9b3
         default:
             responseMessage = 'Something went wrong, sorry!';
             break;
@@ -26,6 +34,8 @@ exports.initApiAiWebhook = (app) => tslib_1.__awaiter(this, void 0, void 0, func
         const parameters = body.result.parameters;
         console.log('session id', body.sessionId);
         console.log('Action: ', action, 'Parameters: ', parameters);
+        const user = yield databaseUser_1.getUserFromSessionId(body.sessionId);
+        console.log('user', user);
         const response = yield exports.resolveMessage(action, parameters);
         res.send(JSON.stringify(response));
     }));

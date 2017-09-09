@@ -1,4 +1,4 @@
-import {IUser} from './databaseUser'
+import {IUser, setSessionId} from './databaseUser'
 import {translateMessage} from './translate'
 const apiai = require('apiai')
 const translate = require('google-translate-api')
@@ -41,6 +41,7 @@ export const sendMessage = async (message: string, sessionToken: string, databas
 
         console.log('message successfully sent')
         console.log(response)
+        setSessionId(databaseUser.userId, response.sessionId)
 
         resolve(translatedResponseMessage)
       })

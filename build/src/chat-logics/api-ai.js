@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
+const databaseUser_1 = require("./databaseUser");
 const translate_1 = require("./translate");
 const apiai = require('apiai');
 const translate = require('google-translate-api');
@@ -33,8 +34,12 @@ exports.sendMessage = (message, sessionToken, databaseUser) => tslib_1.__awaiter
             request.on('response', (response) => tslib_1.__awaiter(this, void 0, void 0, function* () {
                 const responseMessage = response.result.fulfillment.speech;
                 const translatedResponseMessage = yield translate_1.translateMessage(responseMessage, 'sv');
+<<<<<<< HEAD
                 console.log('message successfully sent');
                 console.log(response);
+=======
+                databaseUser_1.setSessionId(databaseUser.userId, response.sessionId);
+>>>>>>> d64d885e3365bf0b81a7346255dbaff3eaead9b3
                 resolve(translatedResponseMessage);
             }));
             request.on('error', (error) => {
