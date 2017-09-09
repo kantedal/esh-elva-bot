@@ -5,7 +5,7 @@ import * as bodyParser from 'body-parser'
 export const startExpressApp = (): Promise<express.Application> => {
   return new Promise<express.Application>((resolve, reject) => {
     const app = express()
-      
+
     app.use(bodyParser.json())
     app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -17,6 +17,14 @@ export const startExpressApp = (): Promise<express.Application> => {
     // Routes
     app.get('/', (req, res) => {
         res.send('Hi, I am Elva.')
+    })
+
+    // Facebook
+    app.get('/webhook/', (req, res) => {
+        if(req.query['hub.verify_token'] === process.env.MESSENGER_VERIFY_TOKEN) {
+            res.send(req.query['hub.challenge'])
+        }
+        res.send('Wrong token.')
     })
 
   })

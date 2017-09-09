@@ -14,6 +14,12 @@ exports.startExpressApp = () => {
         app.get('/', (req, res) => {
             res.send('Hi, I am Elva.');
         });
+        app.get('/webhook/', (req, res) => {
+            if (req.query['hub.verify_token'] === process.env.MESSENGER_VERIFY_TOKEN) {
+                res.send(req.query['hub.challenge']);
+            }
+            res.send('Wrong token.');
+        });
     });
 };
 //# sourceMappingURL=start-express-app.js.map
