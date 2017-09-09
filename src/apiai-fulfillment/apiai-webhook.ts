@@ -4,6 +4,7 @@ import {generateResponseJson, IResponseJson} from './generateResponseJson'
 import {findPointOfInterest} from './actions/pointOfIntrest'
 import {getRandomEventForImmigrants, getSwedishDirections} from './actions/immigrant'
 import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
+import {findPublicTransport} from './actions/public-transport'
 
 const enum Actions {
   parking = 'parking',
@@ -11,7 +12,8 @@ const enum Actions {
   integration = 'integration',
   immigrantEvent = 'immigrantEvent',
   learnSwedish = 'learnSwedish',
-  poiAsTourist = 'poiAsTourist'
+  poiAsTourist = 'poiAsTourist',
+  transport = 'transport'
 }
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<IResponseJson> => {
@@ -35,6 +37,8 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       console.log(param)
       responseMessage = await findPointOfInterest(param)
       break
+    case Actions.transport:
+      responseMessage = await findPublicTransport(parameters['from-address'], parameters['to-address'])
     default:
       responseMessage = 'Something went wrong, sorry!'
       break
