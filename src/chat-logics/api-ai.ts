@@ -14,30 +14,21 @@ export const sendMessage = async (message: string, sessionToken: string, databas
     })
 
     request.on('response', async (response) => {
-      const responseMessage = response.result.fulfillment.speech
-      const translatedResponseMessage = await translateMessage(responseMessage, 'sv')
-
-      console.log('message successfully sent')
-      console.log(response)
-      setSessionId(databaseUser.userId, response.sessionId)
-
-      request.on('response', async (response) => {
+      try {
         const responseMessage = response.result.fulfillment.speech
         const userLanguage = databaseUser.sessionId ? SessionManager.Instance.getCurrentLanguageForUser(databaseUser.sessionId || databaseUser.userId) : 'sv'
         const translatedResponseMessage = await translateMessage(responseMessage, userLanguage)
 
-        console.log('message successfully sent')
         console.log(response)
         setSessionId(databaseUser.userId, response.sessionId)
+        console.log('message successfully sent')
 
         resolve(translatedResponseMessage)
-      })
 
-      request.on('error', (error) => {
-        reject()
-      })
+      } catch(error) {
+        console.log('error', error)
+      }
 
-      request.end()
     })
 
     request.on('error', (error) => {
