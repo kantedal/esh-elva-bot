@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const parking_1 = require("./actions/parking");
 const generateResponseJson_1 = require("./generateResponseJson");
+const databaseUser_1 = require("../chat-logics/databaseUser");
 exports.resolveMessage = (action, parameters) => tslib_1.__awaiter(this, void 0, void 0, function* () {
     let responseMessage = '';
     console.log('NEW EVENT');
@@ -26,6 +27,8 @@ exports.initApiAiWebhook = (app) => tslib_1.__awaiter(this, void 0, void 0, func
         const parameters = body.result.parameters;
         console.log('session id', body.sessionId);
         console.log('Action: ', action, 'Parameters: ', parameters);
+        const user = databaseUser_1.getUserFromSessionId(body.sessionId);
+        console.log(user);
         const response = yield exports.resolveMessage(action, parameters);
         res.send(JSON.stringify(response));
     }));

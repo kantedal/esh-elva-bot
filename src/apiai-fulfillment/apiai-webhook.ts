@@ -2,6 +2,7 @@ import * as express from 'express'
 import {findNearestParkingSpot} from './actions/parking'
 import {generateResponseJson, IResponseJson} from './generateResponseJson'
 import {findPointOfIntrest} from './actions/pointOfIntrest'
+import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 
 const enum Actions {
   parking = 'parking',
@@ -39,6 +40,9 @@ export const initApiAiWebhook = async (app: express.Application) => {
     console.log('session id', body.sessionId)
 
     console.log('Action: ', action, 'Parameters: ', parameters)
+
+    const user: any = getUserFromSessionId(body.sessionId)
+    console.log(user)
 
     const response: IResponseJson = await resolveMessage(action, parameters)
 
