@@ -24,7 +24,14 @@ Set environment variables
 cp .env.example .env
 ```
 
-And set API keys
+...and set API keys. Then:
+
+```sh
+npm run watch && npm run dev
+```
+
+## Deploy
+Merge the master branch to the deploy branch and make sure to commit the changed build files.
 
 ## Available scripts
 
