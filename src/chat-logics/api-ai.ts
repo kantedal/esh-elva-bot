@@ -7,11 +7,13 @@ const app = apiai(process.env.APIAI_API_KEY)
 
 export const sendMessage = async (message: string, sessionToken: string, databaseUser: IUser) => {
   const translatedMessage = await translateMessage(message, 'en')
+  console.log('send message from database user', databaseUser.userId)
 
   return new Promise<string>((resolve, reject) => {
     console.log(translatedMessage)
     const request = app.textRequest(translatedMessage, {
-      sessionId: sessionToken.substring(100, 136)
+      sessionId: sessionToken.substring(100, 136),
+      userId: databaseUser.userId
     })
 
     request.on('response', async (response) => {
