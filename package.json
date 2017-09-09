@@ -29,7 +29,8 @@
     "pretest": "npm run lint",
     "test": "npm run test-only",
     "test-only": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "postinstall": "npm run build"
   },
   "author": "Jakub Synowiec <github@jakubsynowiec.info>",
   "license": "MIT",
