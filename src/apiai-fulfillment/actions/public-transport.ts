@@ -1,11 +1,6 @@
 const request = require('request-promise')
 import {geocodeAddress, IGeoCode} from './address'
 
-const transportTypes = {
-  WALK: 'walk',
-  JNY: 'bus',
-}
-
 export const findPublicTransport = async (from: string, to: string) => {
   try {
     const geoPoints: IGeoCode[] = await Promise.all([geocodeAddress(from), geocodeAddress(to)])

@@ -4,6 +4,7 @@ import {generateResponseJson, IResponseJson} from './generateResponseJson'
 import {findPointOfInterest} from './actions/pointOfIntrest'
 import {getRandomEventForImmigrants, getSwedishDirections} from './actions/immigrant'
 import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
+import {findPublicTransport} from './actions/public-transport'
 
 const enum Actions {
   parking = 'parking',
@@ -11,10 +12,12 @@ const enum Actions {
   integration = 'integration',
   immigrantEvent = 'immigrantEvent',
   learnSwedish = 'learnSwedish',
-  poiAsTourist = 'poiAsTourist'
+  poiAsTourist = 'poiAsTourist',
+  transport = 'transport',
+  test = 'test'
 }
 
-export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<IResponseJson> => {
+export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<any> => {
   let responseMessage = ''
 
   switch (action) {
@@ -31,10 +34,23 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       break
     case Actions.poiAsTourist:
       const param = parameters['point_of_interest'] || parameters['point_of_interest_any']
-      console.log(`The param is:`)
-      console.log(param)
-      responseMessage = await findPointOfInterest(param)
+      console.log(`The param is: ${param}`)
+      responseMessage = await findPointOfInterest(param) // ?
       break
+    case Actions.transport:
+      console.log('transport action', parameters['from-address'], parameters['to-address'])
+      responseMessage = await findPublicTransport(parameters['from-address'], parameters['to-address'])
+      break
+    case Actions.test:
+      console.log('test action')
+      return {
+        followupEvent: {
+          data: {
+            testtest: 'testing testing',
+          },
+          name: 'fill_slots'
+        }
+      }
     default:
       responseMessage = 'Something went wrong, sorry!'
       break
@@ -48,11 +64,12 @@ export const initApiAiWebhook = async (app: express.Application) => {
   app.post('/apiai', async (req: express.Request, res: any) => {
     const body = req.body
 
+    console.log(body)
     const action = body.result.action
     const parameters = body.result.parameters
+
     // const conexts = body.results.contexts
     console.log('session id', body.sessionId)
-
     console.log('Action: ', action, 'Parameters: ', parameters)
 
     const user: any = await getUserFromSessionId(body.sessionId)
