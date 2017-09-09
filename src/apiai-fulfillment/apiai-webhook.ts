@@ -39,6 +39,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       break
     case Actions.transport:
       responseMessage = await findPublicTransport(parameters['from-address'], parameters['to-address'])
+      break
     default:
       responseMessage = 'Something went wrong, sorry!'
       break
