@@ -2,11 +2,13 @@ import * as express from 'express'
 import {findNearestParkingSpot} from './actions/parking'
 import {generateResponseJson, IResponseJson} from './generateResponseJson'
 import {findPointOfIntrest} from './actions/pointOfIntrest'
+import {getRandomEventForImmigrants} from './actions/immigrantEvent'
 
 const enum Actions {
   parking = 'parking',
   address = 'address',
-  integration = 'integration'
+  integration = 'integration',
+  immigrantEvent = 'immigrantEvent'
 }
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<IResponseJson> => {
@@ -19,6 +21,9 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseMessage = await findNearestParkingSpot(parameters['address'])
       break
     case Actions.integration:
+      break
+    case Actions.immigrantEvent:
+      responseMessage = await getRandomEventForImmigrants()
       break
     default:
       responseMessage = 'Something went wrong, sorry!'
