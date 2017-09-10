@@ -6,6 +6,7 @@ import {getRandomEventForImmigrants, getSwedishDirections} from './actions/immig
 import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 import {findPublicTransport} from './actions/public-transport'
 import {getWeather} from './actions/weather'
+import {setHome} from './actions/setHome'
 
 const enum Actions {
   parking = 'parking',
@@ -20,7 +21,7 @@ const enum Actions {
   test = 'test'
 }
 
-export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<any> => {
+export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}, sessionId: string): Promise<any> => {
   let responseJson = {}
 
   switch (action) {
@@ -48,7 +49,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(await getWeather())
       break
     case Actions.setHome:
-      responseJson = {}
+      responseJson = generateResponseJson(await setHome(sessionId, parameters['address']))
       break
     case Actions.test:
       responseJson = {
@@ -72,6 +73,7 @@ export const initApiAiWebhook = async (app: express.Application) => {
   // findPointOfInterest()
   app.post('/apiai', async (req: express.Request, res: any) => {
     const { body } = req
+    const sessionId = body.sessionId
     const { action, parameters } = body.result
 
     // const conexts = body.results.contexts
@@ -81,7 +83,7 @@ export const initApiAiWebhook = async (app: express.Application) => {
     const user: any = await getUserFromSessionId(body.sessionId)
     console.log('user', user)
 
-    const response: IResponseJson = await resolveMessage(action, parameters)
+    const response: IResponseJson = await resolveMessage(action, parameters, sessionId)
 
     res.send(JSON.stringify(response))
   })

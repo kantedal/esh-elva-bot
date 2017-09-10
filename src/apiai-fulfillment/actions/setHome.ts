@@ -2,5 +2,5 @@ import {getDatabaseUser, getUserFromSessionId, setSessionId, setUserProperty} fr
 
 export const setHome = async (sessionId: string, homeAddress: string) => {
   await setUserProperty(sessionId, 'homeAddress', homeAddress)
-  return {}
+  return `Okey, saved your address! You live at ${homeAddress} 🏡`
 }
