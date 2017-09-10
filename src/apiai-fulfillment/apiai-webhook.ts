@@ -7,7 +7,7 @@ import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 import {findPublicTransport} from './actions/public-transport'
 import {getWeather} from './actions/weather'
 import {translateMessage} from '../chat-logics/translate'
-import {setHome} from './actions/home'
+import {setHome, getHome} from './actions/home'
 
 const enum Actions {
   parking = 'parking',
@@ -19,6 +19,7 @@ const enum Actions {
   transport = 'transport',
   weather = 'weather',
   setHome = 'setHome',
+  getHome = 'getHome',
   test = 'test'
 }
 
@@ -38,10 +39,12 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(await getSwedishDirections(parameters['swedishLevel'].toLowerCase()))
       break
     case Actions.poiAsTourist:
-      let param = parameters['point_of_interest'] || parameters['point_of_interest_any']
-      param = await translateMessage(param, 'sv') // Translate the param to swedish for the api
+      const origParam = parameters['point_of_interest'] || parameters['point_of_interest_any']
+      const param = await translateMessage(origParam, 'sv') // Translate the param to swedish for the api
       console.log(`The param is: ${param}`)
-      responseJson = generateResponseJson(await findPointOfInterest(param))
+      let response = await findPointOfInterest(param)
+      response = response === '' ? `Sorry, could not find any result for ${origParam}. Try something else?` : response
+      responseJson = generateResponseJson(response)
       break
     case Actions.transport:
       responseJson = generateResponseJson(await findPublicTransport(parameters['from-address'], parameters['to-address']))
@@ -51,6 +54,9 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       break
     case Actions.setHome:
       responseJson = generateResponseJson(await setHome(sessionId, parameters['address']))
+      break
+    case Actions.getHome:
+      responseJson = generateResponseJson(await getHome(sessionId))
       break
     case Actions.test:
       responseJson = {
