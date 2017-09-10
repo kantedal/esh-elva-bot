@@ -7,6 +7,7 @@ import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 import {findPublicTransport} from './actions/public-transport'
 import {getWeather} from './actions/weather'
 import {setHome} from './actions/setHome'
+import {translateMessage} from '../chat-logics/translate'
 
 const enum Actions {
   parking = 'parking',
@@ -37,9 +38,10 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(await getSwedishDirections(parameters['swedishLevel'].toLowerCase()))
       break
     case Actions.poiAsTourist:
-      const param = parameters['point_of_interest'] || parameters['point_of_interest_any']
+      let param = parameters['point_of_interest'] || parameters['point_of_interest_any']
       console.log(`The param is: ${param}`)
-      responseJson = generateResponseJson(await findPointOfInterest(param)) // ?
+      param = translateMessage(param, 'sv') // Translate the param to swedish for the api
+      responseJson = generateResponseJson(await findPointOfInterest(param))
       break
     case Actions.transport:
       console.log('transport action', parameters['from-address'], parameters['to-address'])
