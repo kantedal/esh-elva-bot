@@ -11,12 +11,12 @@ export const findEvent = async (parameters: {[key: string]: any}) => {
         if(parameters['passive-or-active'] === 'active') {
             isEvent = 0
         }
-
+        const category = parameters['category'] ? parameters['category'] : ''
         console.log('URL')
-        console.log('http://visitlinkoping.se/evenemang?q='+parameters['activity']+'&type='+isEvent+'&category='+parameters['category']+'&date_from='+parameters['date']+'&date_to='+parameters['date']+'&_format=json&render=raw')
+        console.log('http://visitlinkoping.se/evenemang?q='+parameters['activity']+'&type='+isEvent+'&category='+category+'&date_from='+parameters['date']+'&date_to='+parameters['date']+'&_format=json&render=raw')
 
         const options = {
-            uri: 'http://visitlinkoping.se/evenemang?q='+parameters['activity']+'&type='+isEvent+'&category='+parameters['category']+'&date_from='+parameters['date']+'&date_to='+parameters['date']+'&_format=json&render=raw',
+            uri: 'http://visitlinkoping.se/evenemang?q='+parameters['activity']+'&type='+isEvent+'&category='+category+'&date_from='+parameters['date']+'&date_to='+parameters['date']+'&_format=json&render=raw',
             headers: {
                 'User-Agent': 'Request-Promise'
             }
