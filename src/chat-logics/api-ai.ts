@@ -21,7 +21,6 @@ export const sendMessage = async (message: string, sessionToken: string, databas
 
         console.log(response)
         setSessionId(databaseUser.userId, response.sessionId)
-        console.log('message successfully sent')
 
         resolve(translatedResponseMessage)
 
