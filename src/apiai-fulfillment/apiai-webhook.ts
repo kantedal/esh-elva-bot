@@ -7,6 +7,7 @@ import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 import {findPublicTransport} from './actions/public-transport'
 import {getWeather} from './actions/weather'
 import {setHome} from './actions/setHome'
+import {findEvent} from './actions/event'
 
 const enum Actions {
   parking = 'parking',
@@ -18,7 +19,8 @@ const enum Actions {
   transport = 'transport',
   weather = 'weather',
   setHome = 'setHome',
-  test = 'test'
+  test = 'test',
+  event = 'event'
 }
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}, sessionId: string): Promise<any> => {
@@ -61,6 +63,9 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
         }
       }
       break
+      case Actions.event:
+          responseJson = await findEvent(parameters)
+        break
     default:
       responseJson = generateResponseJson('Something went wrong, sorry!')
       break

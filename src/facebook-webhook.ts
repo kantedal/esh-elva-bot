@@ -36,8 +36,10 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
       getDatabaseUser(senderId, senderId).then(async (user: IUser) => {
         if(event.message && event.message.text) {
           const text = event.message.text
-          const responseMessage: string = await sendMessage(text, user.sessionId, user)
-          sendText(senderId, responseMessage)
+          const responseData: any = await sendMessage(text, user.sessionId, user)
+
+          sendText(senderId, responseData)
+
         }
       })
     }
@@ -47,8 +49,33 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
 
 }
 
-const sendText = (sender, text) => {
-  const messageData = {text}
+const sendText = (sender, responseData) => {
+  let messageData
+  if(responseData.dataObject) {
+      messageData = {
+          attachment:{
+              type:'template',
+              payload:{
+                  template_type:'generic',
+                  elements:[
+                      {
+                          title:responseData.eventName,
+                          image_url:responseData.imgUrl,
+                          buttons:[
+                              {
+                                  type:'web_url',
+                                  url:responseData.url,
+                                  title:'More information'
+                              }
+                          ]
+                      }
+                  ]
+              }
+          }
+      }
+  } else {
+    messageData = {text:responseData.translatedResponseMessage}
+  }
   request({
     url: 'https://graph.facebook.com/v2.6/me/messages',
     qs: {access_token},
