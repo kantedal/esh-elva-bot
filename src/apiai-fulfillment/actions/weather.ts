@@ -1,6 +1,6 @@
 import {geocodeAddress} from './address'
 import request = require('request-promise')
-import {isBoolean} from 'util'
+import * as moment from 'moment'
 
 const Distance = require('geo-distance')
 
@@ -40,11 +40,12 @@ export const isRain = async (hours_forward?: number, address?: string) => {
 }
 
 // If user wants to use address 'hours_forward' has to be passed!
-export const getWeather = async (hours_forward?: number, address?: string) => {
+export const getWeather = async (date?: string, address?: string) => {
+  console.log(date)
   try {
     let weatherCoordinate = null
     let weatherApiAddress = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/15.513/lat/58.417/data.json'
-
+    let time = 0
     if(address !== undefined) {
       const userGeoCode = await geocodeAddress(address)
       weatherCoordinate = { lon: userGeoCode.longitude, lat: userGeoCode.latitude }
@@ -53,12 +54,11 @@ export const getWeather = async (hours_forward?: number, address?: string) => {
     }
 
     try {
-
-      if(hours_forward === undefined) {
-        hours_forward = 0
+      if(date !== undefined) {
+        time = Math.floor((moment(date).valueOf() - moment().valueOf()) / 3600000)
       }
       const weatherData = JSON.parse(await request(weatherApiAddress))
-      const weatherParameters = weatherData.timeSeries[hours_forward].parameters
+      const weatherParameters = weatherData.timeSeries[time].parameters
       let temp
       let sky = -1
       let rain = -1
@@ -70,7 +70,12 @@ export const getWeather = async (hours_forward?: number, address?: string) => {
       for(const parameter of weatherParameters){
         if (parameter.name === 't') { // Temperature
           temp = parameter.values[0]
-          weatherMessage += 'Currently it is ' + temp + '°C degrees. '
+
+          if(date !== undefined) {
+            weatherMessage += 'Currently it is ' + temp + '°C degrees. '
+          } else {
+            weatherMessage += 'On ' + date + ' the weather is ' + temp + '°C degrees. '
+          }
         }
       }
 

@@ -6,8 +6,10 @@ import {getRandomEventForImmigrants, getSwedishDirections} from './actions/immig
 import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 import {findPublicTransport} from './actions/public-transport'
 import {getWeather} from './actions/weather'
-import {setHome} from './actions/setHome'
 import {findEvent} from './actions/event'
+import {translateMessage} from '../chat-logics/translate'
+import {setHome, getHome} from './actions/home'
+import {takeMeHome} from './actions/takeMeHome'
 
 const enum Actions {
   parking = 'parking',
@@ -19,12 +21,14 @@ const enum Actions {
   transport = 'transport',
   weather = 'weather',
   setHome = 'setHome',
-  test = 'test',
-  event = 'event'
+  event = 'event',
+  getHome = 'getHome',
+  takeMeHome = 'takeMeHome',
+  test = 'test'
 }
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}, sessionId: string): Promise<any> => {
-  let responseJson = {}
+  let responseJson
 
   switch (action) {
     case Actions.parking:
@@ -39,19 +43,49 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(await getSwedishDirections(parameters['swedishLevel'].toLowerCase()))
       break
     case Actions.poiAsTourist:
-      const param = parameters['point_of_interest'] || parameters['point_of_interest_any']
+      const origParam = parameters['point_of_interest'] || parameters['point_of_interest_any']
+      const param = await translateMessage(origParam, 'sv') // Translate the param to swedish for the api
       console.log(`The param is: ${param}`)
-      responseJson = generateResponseJson(await findPointOfInterest(param)) // ?
+
+      let poiRes = ''
+      try {
+        poiRes = await findPointOfInterest(param)
+      } catch(error) {
+        poiRes = `Sorry, couldn't find any results for ${origParam}, try golf instead?`
+      }
+
+      responseJson = generateResponseJson(poiRes)
       break
     case Actions.transport:
-      console.log('transport action', parameters['from-address'], parameters['to-address'])
-      responseJson = generateResponseJson(await findPublicTransport(parameters['from-address'], parameters['to-address']))
+      let transpRes
+      try {
+        transpRes = await findPublicTransport(parameters['from-address'], parameters['to-address'])
+      } catch(error) {
+        transpRes = `Sorry, couldn't generate results for ${parameters['from-address']} and ${parameters['to-address']}.`
+      }
+
+      responseJson = generateResponseJson(transpRes)
       break
     case Actions.weather:
-      responseJson = generateResponseJson(await getWeather())
+      responseJson = generateResponseJson(await getWeather(parameters['date']))
       break
     case Actions.setHome:
       responseJson = generateResponseJson(await setHome(sessionId, parameters['address']))
+      break
+    case Actions.getHome:
+      responseJson = generateResponseJson(await getHome(sessionId))
+      break
+    case Actions.takeMeHome:
+      let takeHomeRes
+
+      try {
+        takeHomeRes = await takeMeHome(sessionId, parameters['address'])
+      } catch (error) {
+        console.log(error)
+        takeHomeRes = `Sorry, couldn't compute route from ${parameters['address']}`
+      }
+
+      responseJson = generateResponseJson(takeHomeRes)
       break
     case Actions.test:
       responseJson = {
@@ -88,7 +122,7 @@ export const initApiAiWebhook = async (app: express.Application) => {
     const user: any = await getUserFromSessionId(body.sessionId)
     console.log('user', user)
 
-    const response: IResponseJson = await resolveMessage(action, parameters, sessionId)
+    const response = await resolveMessage(action, parameters, sessionId)
 
     res.send(JSON.stringify(response))
   })
