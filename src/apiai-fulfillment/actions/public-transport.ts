@@ -16,6 +16,8 @@ export const findPublicTransport = async (from: string, to: string) => {
       responseMessage += ' first '
     }
 
+    const responses = []
+
     let count = 0
     for (const leg of legList) {
       if (count !== 0) responseMessage += 'Then '
@@ -30,10 +32,13 @@ export const findPublicTransport = async (from: string, to: string) => {
           break
       }
 
+      responses.push(responseMessage)
+      responseMessage = ''
+
       count++
     }
 
-    return responseMessage.substr(0,360)
+    return responses
   } catch (err) {
     console.log('error', err)
     return 'Could not parse addresses.'

@@ -26,7 +26,7 @@ const enum Actions {
 }
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}, sessionId: string): Promise<any> => {
-  let responseJson = {}
+  let responseJson
 
   switch (action) {
     case Actions.parking:
@@ -117,8 +117,16 @@ export const initApiAiWebhook = async (app: express.Application) => {
     const user: any = await getUserFromSessionId(body.sessionId)
     console.log('user', user)
 
-    const response: IResponseJson = await resolveMessage(action, parameters, sessionId)
+    const response = await resolveMessage(action, parameters, sessionId)
 
-    res.send(JSON.stringify(response))
+    if (response instanceof Array) {
+      for (const r of response) {
+        res.send(JSON.stringify(res))
+      }
+    }
+    else {
+      res.send(JSON.stringify(response))
+    }
+
   })
 }
