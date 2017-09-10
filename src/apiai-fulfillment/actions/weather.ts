@@ -1,6 +1,6 @@
 import {geocodeAddress} from './address'
 import request = require('request-promise')
-import {isBoolean} from 'util'
+import * as moment from 'moment'
 
 const Distance = require('geo-distance')
 
@@ -45,7 +45,7 @@ export const getWeather = async (date?: string, address?: string) => {
   try {
     let weatherCoordinate = null
     let weatherApiAddress = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/15.513/lat/58.417/data.json'
-
+    let time = 0
     if(address !== undefined) {
       const userGeoCode = await geocodeAddress(address)
       weatherCoordinate = { lon: userGeoCode.longitude, lat: userGeoCode.latitude }
@@ -56,12 +56,10 @@ export const getWeather = async (date?: string, address?: string) => {
     try {
       let hours_forward = 0
       if(date !== undefined) {
-        if(date === 'tomorrow') {
-          hours_forward = 24
-        }
+        time = (moment().valueOf() - moment(date).valueOf()) / 3600000
       }
       const weatherData = JSON.parse(await request(weatherApiAddress))
-      const weatherParameters = weatherData.timeSeries[hours_forward].parameters
+      const weatherParameters = weatherData.timeSeries[time].parameters
       let temp
       let sky = -1
       let rain = -1
