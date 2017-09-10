@@ -8,7 +8,7 @@ exports.isRain = (hours_forward, address) => tslib_1.__awaiter(this, void 0, voi
     try {
         let weatherCoordinate = null;
         let weatherApiAddress = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/15.513/lat/58.417/data.json';
-        if (hours_forward !== undefined) {
+        if (hours_forward === undefined) {
             hours_forward = 0;
         }
         if (address !== undefined) {
@@ -48,7 +48,7 @@ exports.getWeather = (hours_forward, address) => tslib_1.__awaiter(this, void 0,
                 + weatherCoordinate.lon + '/lat/' + weatherCoordinate.lat + '/data.json';
         }
         try {
-            if (hours_forward !== undefined) {
+            if (hours_forward === undefined) {
                 hours_forward = 0;
             }
             const weatherData = JSON.parse(yield request(weatherApiAddress));
