@@ -30,16 +30,16 @@ export const isRain = async (hours_forward?, address?: string) => {
       }
       return false
     } catch (error) {
-      return 'Could not find weather on this location.'
+      return 'Could not find weather on this location. :('
     }
 
   } catch (err) {
-    return 'Could not find your current location.'
+    return 'Could not find your current location. :('
   }
 }
 
 // If user wants to use address 'hours_forward' has to be passed!
-export const getWeather = async (hours_forward?, address?: string) => {
+export const getWeather = async (hours_forward?: number, address?: string) => {
   try {
     let weatherCoordinate = null
     let weatherApiAddress = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/15.513/lat/58.417/data.json'
@@ -52,12 +52,12 @@ export const getWeather = async (hours_forward?, address?: string) => {
     }
 
     try {
-      const weatherData = JSON.parse(await request(weatherApiAddress))
 
       if(hours_forward !== undefined) {
         hours_forward = 0
       }
 
+      const weatherData = JSON.parse(await request(weatherApiAddress))
       const weatherParameters = weatherData.timeSeries[0 + hours_forward].parameters
       let temp
       let sky = -1
