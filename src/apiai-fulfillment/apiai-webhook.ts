@@ -39,10 +39,12 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(await getSwedishDirections(parameters['swedishLevel'].toLowerCase()))
       break
     case Actions.poiAsTourist:
-      let param = parameters['point_of_interest'] || parameters['point_of_interest_any']
-      param = await translateMessage(param, 'sv') // Translate the param to swedish for the api
+      const origParam = parameters['point_of_interest'] || parameters['point_of_interest_any']
+      const param = await translateMessage(origParam, 'sv') // Translate the param to swedish for the api
       console.log(`The param is: ${param}`)
-      responseJson = generateResponseJson(await findPointOfInterest(param))
+      let response = await findPointOfInterest(param)
+      response = response === '' ? `Sorry, could not find any result for ${origParam}. Try something else?` : response
+      responseJson = generateResponseJson(response)
       break
     case Actions.transport:
       responseJson = generateResponseJson(await findPublicTransport(parameters['from-address'], parameters['to-address']))
