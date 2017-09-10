@@ -1,4 +1,4 @@
-
+import * as admin from 'firebase-admin'
 import {translateMessage} from './chat-logics/translate'
 
 const apiai = require('apiai')
@@ -26,12 +26,10 @@ const startServer = async (): Promise<void> => {
   startChatClient()
   initFacebookMessengerWebhook(App)
 
-  setTimeout(() => initFacebookMessengerWebhook(App), 2000)
-
-  //const user: IUser = {
-  //  userId: '12321'
-  //}
-  //console.log(await translateMessage('hello my name is jonathan', 'en'))
+  // const usersRef = admin.database().ref('users')
+  // usersRef.orderByChild('sessionId').equalTo('heja-blåvitt').limitToFirst(1).once('value', (snapshot) => {
+  //   console.log('found user', snapshot.val())
+  // })
 }
 
 startServer()

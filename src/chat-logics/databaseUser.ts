@@ -80,7 +80,7 @@ export const setSessionId = (userId: string, sessionId: string) => {
         if (userKey != null) {
           const user = users[userKey]
           if (user) {
-            admin.database().ref('users/' + userKey + '/sessionId/').set(sessionId)
+            admin.database().ref('users/' + userKey + '/sessionId/').set(sessionId.substr(0, 16))
             resolve()
             return
           }
@@ -98,6 +98,7 @@ export const setUserProperty = (sessionId: string, propertyKey: string, value: a
     console.log('find user with key', sessionId)
     usersRef.orderByChild('sessionId').equalTo(sessionId).limitToFirst(1).once('value', (snapshot) => {
       const users = snapshot.val()
+      console.log('found users', users)
       for (const userKey in users) {
         if (userKey != null) {
           const user = users[userKey]

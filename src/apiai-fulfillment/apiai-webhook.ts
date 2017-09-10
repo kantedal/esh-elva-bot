@@ -73,7 +73,7 @@ export const initApiAiWebhook = async (app: express.Application) => {
   // findPointOfInterest()
   app.post('/apiai', async (req: express.Request, res: any) => {
     const { body } = req
-    const sessionId = body.sessionId
+    const sessionId = body.sessionId.substr(0, 16)
     const { action, parameters } = body.result
 
     // const conexts = body.results.contexts
