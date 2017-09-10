@@ -54,9 +54,8 @@ export const getWeather = async (date?: string, address?: string) => {
     }
 
     try {
-      let hours_forward = 0
       if(date !== undefined) {
-        time = (moment().valueOf() - moment(date).valueOf()) / 3600000
+        time = Math.floor((moment('2017-09-11').valueOf() - moment().valueOf()) / 3600000)
       }
       const weatherData = JSON.parse(await request(weatherApiAddress))
       const weatherParameters = weatherData.timeSeries[time].parameters
