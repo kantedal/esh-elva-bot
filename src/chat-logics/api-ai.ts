@@ -7,11 +7,11 @@ export const sendMessage = async (message: string, sessionToken: string, databas
   return new Promise<string>(async (resolve, reject) => {
     await setCurrentLanguageForMessage(message, databaseUser.sessionId || databaseUser.userId)
     const translatedMessage = await translateMessage(message, 'en')
-    console.log(`User ${databaseUser.userId.substring(0, 10)} sent message: ${message}`)
+    console.log(`User ${databaseUser.userId.substr(0, 16)} sent message: ${message}`)
     console.log(`Translated message (if so): ${translatedMessage}`)
 
     const request = apiaiApp.textRequest(translatedMessage, {
-      sessionId: sessionToken.substring(1, 36)
+      sessionId: sessionToken.substr(0, 16)
     })
 
     request.on('response', async (response) => {
