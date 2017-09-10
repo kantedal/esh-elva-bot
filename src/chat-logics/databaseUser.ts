@@ -14,6 +14,7 @@ export interface IUser {
   sessionId?: string
   firstName?: string
   lastName?: string
+  homeAddress?: string
   coordinates?: { lon: number, lat: number }
   preferredLanguage?: 'EN' | 'SV'
 }

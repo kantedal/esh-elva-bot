@@ -6,8 +6,8 @@ import {getRandomEventForImmigrants, getSwedishDirections} from './actions/immig
 import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 import {findPublicTransport} from './actions/public-transport'
 import {getWeather} from './actions/weather'
-import {setHome} from './actions/setHome'
 import {translateMessage} from '../chat-logics/translate'
+import {setHome} from './actions/home'
 
 const enum Actions {
   parking = 'parking',

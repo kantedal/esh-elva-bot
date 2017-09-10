@@ -6,7 +6,15 @@ export const setHome = async (sessionId: string, homeAddress: string) => {
     await setUserProperty(sessionId, 'homeAddress', homeAddress)
     return `Okey, saved your address! You live at ${homeAddress} 🏡`
   } catch (err) {
-    console.log(err)
     return 'Something went wrong with setting your address 😞'
+  }
+}
+
+export const getHome = async (sessionId: string) => {
+  try {
+    const user = await getUserFromSessionId(sessionId)
+    return `Your home address is ${user.homeAddress}`
+  } catch (err) {
+    return 'Error'
   }
 }
