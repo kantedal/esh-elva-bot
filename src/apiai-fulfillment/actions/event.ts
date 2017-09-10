@@ -30,11 +30,12 @@ export const findEvent = async (parameters: {[key: string]: any}) => {
                   jsonString = jsonString.slice(1)
               }
               jsonArray = JSON.parse(jsonString)
-              for(const i in jsonArray) {
-                const title = jsonArray[i].title[0].value
+              console.log(jsonArray);
+              for(const event of jsonArray) {
+                const title = event.title[0].value
                 console.log(title)
                 const url = 'http://www.google.com/search?q=visitlinkoping.se '+title+'&btnI'
-                const imgUrl = jsonArray[i].field_image_current[0]
+                const imgUrl = event.field_image_current[0]
                 console.log(url)
                 const searchString = parameters['activity'].toLowerCase()
 
