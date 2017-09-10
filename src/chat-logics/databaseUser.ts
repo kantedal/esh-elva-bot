@@ -95,6 +95,7 @@ export const setUserProperty = (sessionId: string, propertyKey: string, value: a
   const usersRef = admin.database().ref('users')
   return new Promise<void>((resolve, reject) => {
     // Fetch user with user id
+    console.log('find user with key', sessionId)
     usersRef.orderByChild('sessionId').equalTo(sessionId).limitToFirst(1).once('value', (snapshot) => {
       const users = snapshot.val()
       for (const userKey in users) {
