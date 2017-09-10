@@ -1,9 +1,13 @@
+
+import {translateMessage} from './chat-logics/translate'
+
 const apiai = require('apiai')
 require('dotenv').config()
 import {startChatClient} from './chat-client'
 import {startExpressApp} from './start-express-app'
 import * as express from 'express'
 import {initApiAiWebhook} from './apiai-fulfillment/apiai-webhook'
+import {IUser} from './chat-logics/databaseUser'
 import {findPublicTransport} from './apiai-fulfillment/actions/public-transport'
 import {sendMessage} from './chat-logics/api-ai'
 import {initFacebookMessengerWebhook} from './facebook-webhook'
@@ -23,6 +27,11 @@ const startServer = async (): Promise<void> => {
   initFacebookMessengerWebhook(App)
 
   setTimeout(() => initFacebookMessengerWebhook(App), 2000)
+
+  //const user: IUser = {
+  //  userId: '12321'
+  //}
+  //console.log(await translateMessage('hello my name is jonathan', 'en'))
 }
 
 startServer()

@@ -2,6 +2,7 @@ import * as express from 'express'
 import {error} from 'util'
 import {sendMessage} from './chat-logics/api-ai'
 import {getWeather, isRain} from './apiai-fulfillment/actions/weather'
+import {getDatabaseUser, IUser} from './chat-logics/databaseUser'
 
 const request = require('request')
 const access_token: string = process.env.FACEBOOK_PAGE_ACCESS_TOKEN
@@ -30,12 +31,15 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
     const messaging_events = req.body.entry[0].messaging
 
     for(const event of messaging_events){
-      const sender = event.sender.id
-      if(event.message && event.message.text) {
-        const text = event.message.text
-        const responseMessage: string = await sendMessage(text, 'session-token', { userId: 'heja blavitt!!'})
-        sendText(sender, responseMessage)
-      }
+      const senderId = event.sender.id
+
+      getDatabaseUser(senderId, senderId).then(async (user: IUser) => {
+        if(event.message && event.message.text) {
+          const text = event.message.text
+          const responseMessage: string = await sendMessage(text, user.sessionId, user)
+          sendText(senderId, responseMessage)
+        }
+      })
     }
 
     res.sendStatus(200)

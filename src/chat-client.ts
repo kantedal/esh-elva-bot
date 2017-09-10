@@ -22,6 +22,7 @@ export const startChatClient = () => {
       setTimeout(() => client.emit('chatMessageLoading'), 500)
       setTimeout(async () => {
         const responseMessage: string = await sendMessage(message, sessionToken, databaseUser)
+        console.log('heja')
         client.emit('chatMessage', responseMessage)
       }, 1000)
     })
