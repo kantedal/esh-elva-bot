@@ -52,7 +52,8 @@ const sendText = (sender, responseData) => {
     console.log('sendText')
     console.log(responseData)
   let messageData
-  if(responseData.dataObject) {
+  if(responseData.dataObject.url) {
+        console.log('GOT ATTACHMENT')
       messageData = {
           attachment:{
               type:'template',
