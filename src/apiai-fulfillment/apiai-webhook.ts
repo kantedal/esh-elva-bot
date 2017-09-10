@@ -7,7 +7,7 @@ import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 import {findPublicTransport} from './actions/public-transport'
 import {getWeather} from './actions/weather'
 import {translateMessage} from '../chat-logics/translate'
-import {setHome} from './actions/home'
+import {setHome, getHome} from './actions/home'
 
 const enum Actions {
   parking = 'parking',
@@ -19,6 +19,7 @@ const enum Actions {
   transport = 'transport',
   weather = 'weather',
   setHome = 'setHome',
+  getHome = 'getHome',
   test = 'test'
 }
 
@@ -51,6 +52,9 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       break
     case Actions.setHome:
       responseJson = generateResponseJson(await setHome(sessionId, parameters['address']))
+      break
+    case Actions.getHome:
+      responseJson = generateResponseJson(await getHome(sessionId))
       break
     case Actions.test:
       responseJson = {

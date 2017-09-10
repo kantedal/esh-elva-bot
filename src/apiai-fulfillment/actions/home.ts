@@ -13,7 +13,7 @@ export const setHome = async (sessionId: string, homeAddress: string) => {
 export const getHome = async (sessionId: string) => {
   try {
     const user = await getUserFromSessionId(sessionId)
-    return `Your home address is ${user.homeAddress}`
+    return `Your home address is ${user.homeAddress} 🏡`
   } catch (err) {
     return 'Error'
   }

@@ -33,7 +33,6 @@ export const findPublicTransport = async (from: string, to: string) => {
       count++
     }
 
-    console.log('travel respnse', responseMessage)
     return responseMessage.substr(0,360)
   } catch (err) {
     console.log('error', err)
