@@ -23,16 +23,12 @@ export const isRain = async (hours_forward?: number, address?: string) => {
       const weatherData = JSON.parse(await request(weatherApiAddress))
       const weatherParameters = weatherData.timeSeries[0].parameters
       for(const parameter of weatherParameters){
-        if (parameter.name === 'pmean') { // Rain
-          if (parameter.values[0] > 0) {return true
+        if (parameter.name === 'pmean' && parameter.values[0] > 0) { // Rain
             console.log('rain!!')
-          }else{
-            return false
-            console.log('no rain!!')
-
-          }
+            return true
         }
       }
+      return false
 
     } catch (error) {
       return 'Could not find weather on this location. :('

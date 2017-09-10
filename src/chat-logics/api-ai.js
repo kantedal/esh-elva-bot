@@ -9,7 +9,8 @@ exports.sendMessage = (message, sessionToken, databaseUser) => tslib_1.__awaiter
     return new Promise((resolve, reject) => tslib_1.__awaiter(this, void 0, void 0, function* () {
         yield translate_1.setCurrentLanguageForMessage(message, databaseUser.sessionId || databaseUser.userId);
         const translatedMessage = yield translate_1.translateMessage(message, 'en');
-        console.log('send message from database user', databaseUser.userId);
+        console.log(`User ${databaseUser.userId.substring(0, 10)} sent message: ${message}`);
+        console.log(`Translated message (if so): ${translatedMessage}`);
         const request = main_1.apiaiApp.textRequest(translatedMessage, {
             sessionId: sessionToken.substring(1, 36)
         });
@@ -18,7 +19,8 @@ exports.sendMessage = (message, sessionToken, databaseUser) => tslib_1.__awaiter
                 const responseMessage = response.result.fulfillment.speech;
                 const userLanguage = databaseUser.sessionId ? SessionManager_1.default.Instance.getCurrentLanguageForUser(databaseUser.sessionId || databaseUser.userId) : 'sv';
                 const translatedResponseMessage = yield translate_1.translateMessage(responseMessage, userLanguage);
-                console.log(response);
+                console.log(`Apiai response: ${response}`);
+                console.log(`Apiai translated response (if so): ${translatedResponseMessage}`);
                 databaseUser_1.setSessionId(databaseUser.userId, response.sessionId);
                 resolve(translatedResponseMessage);
             }

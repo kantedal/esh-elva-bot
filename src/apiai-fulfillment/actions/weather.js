@@ -21,17 +21,12 @@ exports.isRain = (hours_forward, address) => tslib_1.__awaiter(this, void 0, voi
             const weatherData = JSON.parse(yield request(weatherApiAddress));
             const weatherParameters = weatherData.timeSeries[0].parameters;
             for (const parameter of weatherParameters) {
-                if (parameter.name === 'pmean') {
-                    if (parameter.values[0] > 0) {
-                        return true;
-                        console.log('rain!!');
-                    }
-                    else {
-                        return false;
-                        console.log('no rain!!');
-                    }
+                if (parameter.name === 'pmean' && parameter.values[0] > 0) {
+                    console.log('rain!!');
+                    return true;
                 }
             }
+            return false;
         }
         catch (error) {
             return 'Could not find weather on this location. :(';

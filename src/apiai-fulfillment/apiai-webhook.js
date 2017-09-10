@@ -8,7 +8,8 @@ const immigrant_1 = require("./actions/immigrant");
 const databaseUser_1 = require("../chat-logics/databaseUser");
 const public_transport_1 = require("./actions/public-transport");
 const weather_1 = require("./actions/weather");
-exports.resolveMessage = (action, parameters) => tslib_1.__awaiter(this, void 0, void 0, function* () {
+const setHome_1 = require("./actions/setHome");
+exports.resolveMessage = (action, parameters, sessionId) => tslib_1.__awaiter(this, void 0, void 0, function* () {
     let responseJson = {};
     switch (action) {
         case "parking" /* parking */:
@@ -35,7 +36,7 @@ exports.resolveMessage = (action, parameters) => tslib_1.__awaiter(this, void 0,
             responseJson = generateResponseJson_1.generateResponseJson(yield weather_1.getWeather());
             break;
         case "setHome" /* setHome */:
-            responseJson = {};
+            responseJson = generateResponseJson_1.generateResponseJson(yield setHome_1.setHome(sessionId, parameters['address']));
             break;
         case "test" /* test */:
             responseJson = {
@@ -57,13 +58,14 @@ exports.initApiAiWebhook = (app) => tslib_1.__awaiter(this, void 0, void 0, func
     // findPointOfInterest()
     app.post('/apiai', (req, res) => tslib_1.__awaiter(this, void 0, void 0, function* () {
         const { body } = req;
+        const sessionId = body.sessionId;
         const { action, parameters } = body.result;
         // const conexts = body.results.contexts
         console.log('session id', body.sessionId);
         console.log('Action: ', action, 'Parameters: ', parameters);
         const user = yield databaseUser_1.getUserFromSessionId(body.sessionId);
         console.log('user', user);
-        const response = yield exports.resolveMessage(action, parameters);
+        const response = yield exports.resolveMessage(action, parameters, sessionId);
         res.send(JSON.stringify(response));
     }));
 });
