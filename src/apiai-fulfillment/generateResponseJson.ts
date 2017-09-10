@@ -5,12 +5,9 @@ export interface IResponseJson {
   contextOut?: any
 }
 
-export const generateResponseJson = (message: string, contextOut?: any): IResponseJson => {
-  console.log('generating json with:')
-  console.log(message)
+export const generateResponseJson = (message: string): IResponseJson => {
   return {
     speech: message,
     displayText: message,
-    contextOut,
   }
 }

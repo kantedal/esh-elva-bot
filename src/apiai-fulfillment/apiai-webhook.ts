@@ -16,39 +16,42 @@ const enum Actions {
   poiAsTourist = 'poiAsTourist',
   transport = 'transport',
   weather = 'weather',
+  setHome = 'setHome',
   test = 'test'
 }
 
 export const resolveMessage = async (action: string, parameters: {[parameter: string]: any}): Promise<any> => {
-  let responseMessage = ''
+  let responseJson = {}
 
   switch (action) {
     case Actions.parking:
-      responseMessage = await findNearestParkingSpot(parameters['address'])
+      responseJson = generateResponseJson(await findNearestParkingSpot(parameters['address']))
       break
     case Actions.integration:
       break
     case Actions.immigrantEvent:
-      responseMessage = await getRandomEventForImmigrants()
+      responseJson = generateResponseJson(await getRandomEventForImmigrants())
       break
     case Actions.learnSwedish:
-      responseMessage = await getSwedishDirections(parameters['swedishLevel'].toLowerCase())
+      responseJson = generateResponseJson(await getSwedishDirections(parameters['swedishLevel'].toLowerCase()))
       break
     case Actions.poiAsTourist:
       const param = parameters['point_of_interest'] || parameters['point_of_interest_any']
       console.log(`The param is: ${param}`)
-      responseMessage = await findPointOfInterest(param) // ?
+      responseJson = generateResponseJson(await findPointOfInterest(param)) // ?
       break
     case Actions.transport:
       console.log('transport action', parameters['from-address'], parameters['to-address'])
-      responseMessage = await findPublicTransport(parameters['from-address'], parameters['to-address'])
+      responseJson = generateResponseJson(await findPublicTransport(parameters['from-address'], parameters['to-address']))
       break
     case Actions.weather:
-      responseMessage = await getWeather()
+      responseJson = generateResponseJson(await getWeather())
+      break
+    case Actions.setHome:
+      responseJson = {}
       break
     case Actions.test:
-      console.log('test action')
-      return {
+      responseJson = {
         followupEvent: {
           data: {
             testtest: 'testing testing',
@@ -56,12 +59,13 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
           name: 'fill_slots'
         }
       }
+      break
     default:
-      responseMessage = 'Something went wrong, sorry!'
+      responseJson = generateResponseJson('Something went wrong, sorry!')
       break
   }
 
-  return generateResponseJson(responseMessage)
+  return responseJson
 }
 
 export const initApiAiWebhook = async (app: express.Application) => {
