@@ -46,6 +46,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       console.log(`The param is: ${param}`)
       let response = await findPointOfInterest(param)
       response = response === '' ? `Sorry, could not find any result for ${origParam}. Try something else?` : response
+      console.log(`POINT OF INTEREST returning ${response} to json`)
       responseJson = generateResponseJson(response)
       break
     case Actions.transport:
