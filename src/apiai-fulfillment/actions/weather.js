@@ -52,7 +52,7 @@ exports.getWeather = (hours_forward, address) => tslib_1.__awaiter(this, void 0,
                 hours_forward = 0;
             }
             const weatherData = JSON.parse(yield request(weatherApiAddress));
-            const weatherParameters = weatherData.timeSeries[0 + hours_forward].parameters;
+            const weatherParameters = weatherData.timeSeries[hours_forward].parameters;
             let temp;
             let sky = -1;
             let rain = -1;

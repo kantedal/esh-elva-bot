@@ -19,7 +19,7 @@ exports.sendMessage = (message, sessionToken, databaseUser) => tslib_1.__awaiter
                 const responseMessage = response.result.fulfillment.speech;
                 const userLanguage = databaseUser.sessionId ? SessionManager_1.default.Instance.getCurrentLanguageForUser(databaseUser.sessionId || databaseUser.userId) : 'sv';
                 const translatedResponseMessage = yield translate_1.translateMessage(responseMessage, userLanguage);
-                console.log(`Apiai response: ${response}`);
+                console.log(`Apiai response: ${response.result.fulfillment.speech}`);
                 console.log(`Apiai translated response (if so): ${translatedResponseMessage}`);
                 databaseUser_1.setSessionId(databaseUser.userId, response.sessionId);
                 resolve(translatedResponseMessage);
