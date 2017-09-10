@@ -1,4 +1,3 @@
-import {generateResponseJson} from '../generateResponseJson'
 const request = require('request-promise')
 import {geocodeAddress, IGeoCode} from './address'
 
@@ -17,8 +16,6 @@ export const findPublicTransport = async (from: string, to: string) => {
       responseMessage += ' first '
     }
 
-    const responses = []
-
     let count = 0
     for (const leg of legList) {
       if (count !== 0) responseMessage += 'Then '
@@ -33,13 +30,10 @@ export const findPublicTransport = async (from: string, to: string) => {
           break
       }
 
-      responses.push(generateResponseJson(responseMessage))
-      responseMessage = ''
-
       count++
     }
 
-    return responses
+    return responseMessage.substr(0,360)
   } catch (err) {
     console.log('error', err)
     return 'Could not parse addresses.'
