@@ -74,7 +74,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(await getHome(sessionId))
       break
     case Actions.takeMeHome:
-      let takeHomeRes = ''
+      let takeHomeRes
 
       try {
         takeHomeRes = await takeMeHome(sessionId, parameters['address'])
