@@ -119,14 +119,6 @@ export const initApiAiWebhook = async (app: express.Application) => {
 
     const response = await resolveMessage(action, parameters, sessionId)
 
-    if (response instanceof Array) {
-      for (const r of response) {
-        res.send(JSON.stringify(res))
-      }
-    }
-    else {
-      res.send(JSON.stringify(response))
-    }
-
+    res.send(JSON.stringify(response))
   })
 }
