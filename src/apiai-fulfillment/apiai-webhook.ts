@@ -46,7 +46,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(await findPublicTransport(parameters['from-address'], parameters['to-address']))
       break
     case Actions.weather:
-      responseJson = generateResponseJson(await getWeather())
+      responseJson = generateResponseJson(await getWeather(parameters['date']))
       break
     case Actions.setHome:
       responseJson = generateResponseJson(await setHome(sessionId, parameters['address']))

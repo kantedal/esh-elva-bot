@@ -30,7 +30,6 @@ export const sendMessage = async (message: string, sessionToken: string, databas
       } catch(error) {
         console.log('error', error)
       }
-
     })
 
     request.on('error', (error) => {
