@@ -39,8 +39,8 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       break
     case Actions.poiAsTourist:
       let param = parameters['point_of_interest'] || parameters['point_of_interest_any']
-      console.log(`The param is: ${param}`)
       param = translateMessage(param, 'sv') // Translate the param to swedish for the api
+      console.log(`The param is: ${param}`)
       responseJson = generateResponseJson(await findPointOfInterest(param))
       break
     case Actions.transport:
