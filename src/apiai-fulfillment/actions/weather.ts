@@ -58,7 +58,7 @@ export const getWeather = async (hours_forward?: number, address?: string) => {
       }
 
       const weatherData = JSON.parse(await request(weatherApiAddress))
-      const weatherParameters = weatherData.timeSeries[0 + hours_forward].parameters
+      const weatherParameters = weatherData.timeSeries[0].parameters
       let temp
       let sky = -1
       let rain = -1

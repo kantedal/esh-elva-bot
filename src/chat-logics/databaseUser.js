@@ -72,4 +72,25 @@ exports.setSessionId = (userId, sessionId) => {
         });
     });
 };
+exports.setUserProperty = (sessionId, propertyKey, value) => {
+    const usersRef = admin.database().ref('users');
+    return new Promise((resolve, reject) => {
+        // Fetch user with user id
+        usersRef.orderByChild('sessionId').equalTo(sessionId).limitToFirst(1).once('value', (snapshot) => {
+            const users = snapshot.val();
+            for (const userKey in users) {
+                if (userKey != null) {
+                    const user = users[userKey];
+                    if (user) {
+                        console.log('Set user', userKey, 'with key', propertyKey, 'to value', value);
+                        admin.database().ref(`users/${userKey}/${propertyKey}/`).set(value);
+                        resolve();
+                        return;
+                    }
+                }
+            }
+            resolve();
+        });
+    });
+};
 //# sourceMappingURL=databaseUser.js.map

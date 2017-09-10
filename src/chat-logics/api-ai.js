@@ -20,7 +20,6 @@ exports.sendMessage = (message, sessionToken, databaseUser) => tslib_1.__awaiter
                 const translatedResponseMessage = yield translate_1.translateMessage(responseMessage, userLanguage);
                 console.log(response);
                 databaseUser_1.setSessionId(databaseUser.userId, response.sessionId);
-                console.log('message successfully sent');
                 resolve(translatedResponseMessage);
             }
             catch (error) {

@@ -5,9 +5,6 @@ const translate = require('google-translate-api');
 const SessionManager_1 = require("../SessionManager");
 exports.translateMessage = (message, to, from, fromUser = false) => tslib_1.__awaiter(this, void 0, void 0, function* () {
     const response = yield translate(message, { to });
-    console.log('translate details:');
-    console.log(response.from);
-    console.log(response);
     // We don't need to translate english from user input
     if (fromUser && response.from.language.iso === 'en') {
         return message;
