@@ -1,6 +1,3 @@
-import * as admin from 'firebase-admin'
-import {translateMessage} from './chat-logics/translate'
-
 const apiai = require('apiai')
 require('dotenv').config()
 import {startChatClient} from './chat-client'

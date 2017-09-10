@@ -44,9 +44,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(await findPointOfInterest(param))
       break
     case Actions.transport:
-      console.log('transport action', parameters['from-address'], parameters['to-address'])
       responseJson = generateResponseJson(await findPublicTransport(parameters['from-address'], parameters['to-address']))
-      console.log('response json')
       break
     case Actions.weather:
       responseJson = generateResponseJson(await getWeather())

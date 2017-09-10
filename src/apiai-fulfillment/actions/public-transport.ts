@@ -34,7 +34,7 @@ export const findPublicTransport = async (from: string, to: string) => {
     }
 
     console.log('travel respnse', responseMessage)
-    return responseMessage
+    return responseMessage.substr(0,360)
   } catch (err) {
     console.log('error', err)
     return 'Could not parse addresses.'
