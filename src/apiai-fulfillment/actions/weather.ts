@@ -24,11 +24,16 @@ export const isRain = async (hours_forward?: number, address?: string) => {
       const weatherParameters = weatherData.timeSeries[0].parameters
       for(const parameter of weatherParameters){
         if (parameter.name === 'pmean') { // Rain
-          if (parameter.values[0] > 0) {return true}
-          console.log(parameter.values[0])
+          if (parameter.values[0] > 0) {return true
+            console.log('rain!!')
+          }else{
+            return false
+            console.log('no rain!!')
+
+          }
         }
       }
-      return false
+
     } catch (error) {
       return 'Could not find weather on this location. :('
     }
@@ -58,7 +63,7 @@ export const getWeather = async (hours_forward?: number, address?: string) => {
       }
 
       const weatherData = JSON.parse(await request(weatherApiAddress))
-      const weatherParameters = weatherData.timeSeries[0].parameters
+      const weatherParameters = weatherData.timeSeries[0 + hours_forward].parameters
       let temp
       let sky = -1
       let rain = -1

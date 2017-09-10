@@ -24,11 +24,14 @@ exports.isRain = (hours_forward, address) => tslib_1.__awaiter(this, void 0, voi
                 if (parameter.name === 'pmean') {
                     if (parameter.values[0] > 0) {
                         return true;
+                        console.log('rain!!');
                     }
-                    console.log(parameter.values[0]);
+                    else {
+                        return false;
+                        console.log('no rain!!');
+                    }
                 }
             }
-            return false;
         }
         catch (error) {
             return 'Could not find weather on this location. :(';
@@ -54,7 +57,7 @@ exports.getWeather = (hours_forward, address) => tslib_1.__awaiter(this, void 0,
                 hours_forward = 0;
             }
             const weatherData = JSON.parse(yield request(weatherApiAddress));
-            const weatherParameters = weatherData.timeSeries[0].parameters;
+            const weatherParameters = weatherData.timeSeries[0 + hours_forward].parameters;
             let temp;
             let sky = -1;
             let rain = -1;
