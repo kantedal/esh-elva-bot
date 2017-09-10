@@ -20,7 +20,7 @@ export const sendMessage = async (message: string, sessionToken: string, databas
         const userLanguage = databaseUser.sessionId ? SessionManager.Instance.getCurrentLanguageForUser(databaseUser.sessionId || databaseUser.userId) : 'sv'
         const translatedResponseMessage = await translateMessage(responseMessage, userLanguage)
 
-        console.log(`Apiai response: ${response}`)
+        console.log(`Apiai response: ${response.result.fulfillment.speech}`)
         console.log(`Apiai translated response (if so): ${translatedResponseMessage}`)
 
         setSessionId(databaseUser.userId, response.sessionId)

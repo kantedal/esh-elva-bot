@@ -5,13 +5,13 @@ const resBeginner: string = `
 `
 
 const resIntermediate: string = `
-  For intermediate learners of Swedish, there is a variaty of language cafées in Linköping!\n
-  At language cafées you can practice your Swedish with other learners of the language as well as native speakers.\n\n
-  The closes språkcafé to Johannes Magnus väg is Språkcafé Ryttargårdskyrkan contact Språkcafé Ryttargårdskyrkan at maria.landalv@ryttargardskyrkan.se or 013 314 190.\n
-  Some other cafées:\n
-  Johanneskyrkan, contact Susanne Gustafsson at susgus61@gmail.com or at 0766 238 209.\n
-  Nygårdskyrkan Skäggetorp, contact johannes@skaggetorp.net or 070 490 1181.\n
-  Read more at http://www.linkoping.se/omsorg-och-hjalp/integration-och-invandring/flykting/aktiviteter-for-flyktingar/\n
+  For intermediate learners of Swedish, there is a variaty of language cafées in Linköping!
+  At language cafées you can practice your Swedish with other learners of the language as well as native speakers.
+  The closes språkcafé to Johannes Magnus väg is Språkcafé Ryttargårdskyrkan contact Språkcafé Ryttargårdskyrkan at maria.landalv@ryttargardskyrkan.se or 013 314 190.
+  Some other cafées:
+  Johanneskyrkan, contact Susanne Gustafsson at susgus61@gmail.com or at 0766 238 209.
+  Nygårdskyrkan Skäggetorp, contact johannes@skaggetorp.net or 070 490 1181.
+  Read more at http://www.linkoping.se/omsorg-och-hjalp/integration-och-invandring/flykting/aktiviteter-for-flyktingar/
 `
 
 const resAdvanced: string = resIntermediate
