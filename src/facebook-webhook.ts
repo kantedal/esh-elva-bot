@@ -35,7 +35,8 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
         if(event.message && event.message.text) {
           const text = event.message.text
           const responseData: any = await sendMessage(text, user.sessionId, user)
-
+            console.log('response data sending to messenger')
+            console.log(responseData)
           sendText(senderId, responseData)
 
         }
@@ -48,6 +49,8 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
 }
 
 const sendText = (sender, responseData) => {
+    console.log('sendText')
+    console.log(responseData)
   let messageData
   if(responseData.dataObject) {
       messageData = {
