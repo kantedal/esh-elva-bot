@@ -44,7 +44,15 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       const origParam = parameters['point_of_interest'] || parameters['point_of_interest_any']
       const param = await translateMessage(origParam, 'sv') // Translate the param to swedish for the api
       console.log(`The param is: ${param}`)
-      let response = await findPointOfInterest(param)
+
+      let response = ''
+      try {
+        response = await findPointOfInterest(param)
+      } catch(error) {
+        console.log(`CAUGHT ERROR IN POINT OF INTEREST AWAIT`)
+        response = `Sorry, couldn't parse that.`
+      }
+
       response = response === '' ? `Sorry, could not find any result for ${origParam}. Try something else?` : response
       console.log(`POINT OF INTEREST returning ${response} to json`)
       responseJson = generateResponseJson(response)
