@@ -62,7 +62,7 @@ export const findPointOfInterest = async (type: string) => {
         returnString += `\n`
       }
 
-      resolve(returnString)
+      resolve(returnString.substring(0, 360))
     })
     .then((response) => response)
     .catch((reason) => {
