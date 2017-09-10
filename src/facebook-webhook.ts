@@ -61,12 +61,12 @@ const sendText = (sender, responseData) => {
                   template_type:'generic',
                   elements:[
                       {
-                          title:responseData.eventName,
-                          image_url:responseData.imgUrl,
+                          title:responseData.dataObject.eventName,
+                          image_url:responseData.dataObject.imgUrl,
                           buttons:[
                               {
                                   type:'web_url',
-                                  url:responseData.url,
+                                  url:responseData.dataObject.url,
                                   title:'More information'
                               }
                           ]
