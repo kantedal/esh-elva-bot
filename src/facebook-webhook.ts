@@ -13,7 +13,7 @@ export const initFacebookMessengerWebhook = (app: express.Application) => {
   app.get('/', async (req, res) => {
        const time = Math.floor((moment('2017-09-11').valueOf() - moment().valueOf()) / 3600000)
 
-    res.send(await getWeather('2017-09-13'))
+    res.send(await getWeather('2017-09-11'))
   })
 
   // Facebook
