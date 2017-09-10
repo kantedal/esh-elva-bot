@@ -1,9 +1,45 @@
 import {geocodeAddress} from './address'
 import request = require('request-promise')
+import {isBoolean} from 'util'
 
 const Distance = require('geo-distance')
 
-export const getWeather = async (address?: string) => {
+export const isRain = async (hours_forward?, address?: string) => {
+  try {
+    let weatherCoordinate = null
+    let weatherApiAddress = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/15.513/lat/58.417/data.json'
+
+    if(hours_forward !== undefined) {
+      hours_forward = 0
+    }
+
+    if(address !== undefined) {
+      const userGeoCode = await geocodeAddress(address)
+      weatherCoordinate = { lon: userGeoCode.longitude, lat: userGeoCode.latitude }
+      weatherApiAddress = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/'
+        + weatherCoordinate.lon +'/lat/'+ weatherCoordinate.lat +'/data.json'
+    }
+    try {
+      const weatherData = JSON.parse(await request(weatherApiAddress))
+      const weatherParameters = weatherData.timeSeries[0 + hours_forward].parameters
+      for(const parameter of weatherParameters){
+        if (parameter.name === 'pmean') { // Rain
+          if (parameter.values[0] > 0) {return true}
+          console.log(parameter.values[0])
+        }
+      }
+      return false
+    } catch (error) {
+      return 'Could not find weather on this location.'
+    }
+
+  } catch (err) {
+    return 'Could not find your current location.'
+  }
+}
+
+// If user wants to use address 'hours_forward' has to be passed!
+export const getWeather = async (hours_forward?, address?: string) => {
   try {
     let weatherCoordinate = null
     let weatherApiAddress = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/15.513/lat/58.417/data.json'
@@ -17,7 +53,12 @@ export const getWeather = async (address?: string) => {
 
     try {
       const weatherData = JSON.parse(await request(weatherApiAddress))
-      const weatherParameters = weatherData.timeSeries[0].parameters
+
+      if(hours_forward !== undefined) {
+        hours_forward = 0
+      }
+
+      const weatherParameters = weatherData.timeSeries[0 + hours_forward].parameters
       let temp
       let sky = -1
       let rain = -1
@@ -29,7 +70,7 @@ export const getWeather = async (address?: string) => {
       for(const parameter of weatherParameters){
         if (parameter.name === 't') { // Temperature
           temp = parameter.values[0]
-          weatherMessage += 'Currently it is' + temp + '°C degrees. '
+          weatherMessage += 'Currently it is ' + temp + '°C degrees. '
         }
       }
 
