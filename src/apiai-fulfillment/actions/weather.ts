@@ -54,7 +54,7 @@ export const getWeather = async (date?: string, address?: string) => {
     }
 
     try {
-      if(date !== undefined) {
+      if(date) {
         time = Math.floor((moment(date).valueOf() - moment().valueOf()) / 3600000)
       }
       const weatherData = JSON.parse(await request(weatherApiAddress))
@@ -71,10 +71,10 @@ export const getWeather = async (date?: string, address?: string) => {
         if (parameter.name === 't') { // Temperature
           temp = parameter.values[0]
 
-          if(date !== undefined) {
+          if(!date) {
             weatherMessage += 'Currently it is ' + temp + '°C degrees. '
           } else {
-            weatherMessage += 'On ' + date + ' the weather is ' + temp + '°C degrees. '
+            weatherMessage += date + ' the weather is ' + temp + '°C degrees. '
           }
         }
       }

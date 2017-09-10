@@ -6,6 +6,7 @@ import {getRandomEventForImmigrants, getSwedishDirections} from './actions/immig
 import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 import {findPublicTransport} from './actions/public-transport'
 import {getWeather} from './actions/weather'
+import {findEvent} from './actions/event'
 import {translateMessage} from '../chat-logics/translate'
 import {setHome, getHome} from './actions/home'
 import {takeMeHome} from './actions/takeMeHome'
@@ -20,6 +21,7 @@ const enum Actions {
   transport = 'transport',
   weather = 'weather',
   setHome = 'setHome',
+  event = 'event',
   getHome = 'getHome',
   takeMeHome = 'takeMeHome',
   test = 'test'
@@ -95,6 +97,9 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
         }
       }
       break
+      case Actions.event:
+          responseJson = await findEvent(parameters)
+        break
     default:
       responseJson = generateResponseJson('Something went wrong, sorry!')
       break
