@@ -41,6 +41,7 @@ export const isRain = async (hours_forward?: number, address?: string) => {
 
 // If user wants to use address 'hours_forward' has to be passed!
 export const getWeather = async (date?: string, address?: string) => {
+  console.log(date)
   try {
     let weatherCoordinate = null
     let weatherApiAddress = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/15.513/lat/58.417/data.json'
