@@ -55,7 +55,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(poiRes)
       break
     case Actions.transport:
-      let transpRes = ''
+      let transpRes
       try {
         transpRes = await findPublicTransport(parameters['from-address'], parameters['to-address'])
       } catch(error) {
@@ -74,7 +74,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(await getHome(sessionId))
       break
     case Actions.takeMeHome:
-      let takeHomeRes = ''
+      let takeHomeRes
 
       try {
         takeHomeRes = await takeMeHome(sessionId, parameters['address'])
@@ -119,14 +119,6 @@ export const initApiAiWebhook = async (app: express.Application) => {
 
     const response = await resolveMessage(action, parameters, sessionId)
 
-    if (response instanceof Array) {
-      for (const r of response) {
-        res.send(JSON.stringify(res))
-      }
-    }
-    else {
-      res.send(JSON.stringify(response))
-    }
-
+    res.send(JSON.stringify(response))
   })
 }

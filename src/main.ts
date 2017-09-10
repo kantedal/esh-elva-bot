@@ -16,7 +16,7 @@ export let apiaiApp
 const startServer = async (): Promise<void> => {
   apiaiApp = apiai(process.env.APIAI_API_KEY)
 
-  // findPublicTransport('Stora torget linköping', 'Ryds alle 19')
+  findPublicTransport('Stora torget linköping', 'Ryds alle 19')
 
   const App: express.Application = await startExpressApp()
 
@@ -24,13 +24,6 @@ const startServer = async (): Promise<void> => {
   startChatClient()
   initFacebookMessengerWebhook(App)
 
-  const responseJson = generateResponseJson(await findPublicTransport('Ryds Allé 19', 'Ågatan 2'))
-  console.log(responseJson)
-
-  // const usersRef = admin.database().ref('users')
-  // usersRef.orderByChild('sessionId').equalTo('heja-blåvitt').limitToFirst(1).once('value', (snapshot) => {
-  //   console.log('found user', snapshot.val())
-  // })
 }
 
 startServer()

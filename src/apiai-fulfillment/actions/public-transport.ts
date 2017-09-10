@@ -16,29 +16,25 @@ export const findPublicTransport = async (from: string, to: string) => {
       responseMessage += ' first '
     }
 
-    const responses = []
-
     let count = 0
     for (const leg of legList) {
       if (count !== 0) responseMessage += 'Then '
       switch (leg.type) {
         case 'WALK':
-          responseMessage += `walk to ${leg.Destination.name}, this will take approximately ${leg.duration[2]} minutes. `
+          responseMessage += `walk 🚶to ${leg.Destination.name}, this will take approximately ${leg.duration[2]} minutes ⌚. `
           break
         case 'JNY':
-          responseMessage += `take bus ${leg.Product.name} which leaves at ${leg.Origin.time} and arrives at ${leg.Destination.time}. `
+          responseMessage += `take bus 🚌 ${leg.Product.name} which leaves at ${leg.Origin.time} and arrives at ${leg.Destination.time} ⌚. `
           break
         default:
           break
       }
 
-      responses.push(responseMessage)
-      responseMessage = ''
-
       count++
     }
 
-    return responses
+    console.log(responseMessage)
+    return responseMessage.substr(0,360)
   } catch (err) {
     console.log('error', err)
     return 'Could not parse addresses.'
