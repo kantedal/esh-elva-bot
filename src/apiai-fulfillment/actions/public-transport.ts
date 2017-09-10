@@ -21,7 +21,7 @@ export const findPublicTransport = async (from: string, to: string) => {
       if (count !== 0) responseMessage += 'Then '
       switch (leg.type) {
         case 'WALK':
-          responseMessage += `walk 🚶to ${leg.Destination.name}, this will take approximately ${leg.duration[2]} minutes ⌚. `
+          responseMessage += `walk 🚶 to ${leg.Destination.name}, this will take approximately ${leg.duration[2]} minutes ⌚. `
           break
         case 'JNY':
           responseMessage += `take bus 🚌 ${leg.Product.name} which leaves at ${leg.Origin.time} and arrives at ${leg.Destination.time}. `
