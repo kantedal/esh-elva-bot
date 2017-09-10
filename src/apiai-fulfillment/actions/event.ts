@@ -12,6 +12,9 @@ export const findEvent = async (parameters: {[key: string]: any}) => {
             isEvent = 0
         }
 
+        console.log('URL')
+        console.log('http://visitlinkoping.se/evenemang?q='+parameters['activity']+'&type='+isEvent+'&category='+parameters['category']+'&date_from='+parameters['date']+'&date_to='+parameters['date']+'&_format=json&render=raw')
+
         const options = {
             uri: 'http://visitlinkoping.se/evenemang?q='+parameters['activity']+'&type='+isEvent+'&category='+parameters['category']+'&date_from='+parameters['date']+'&date_to='+parameters['date']+'&_format=json&render=raw',
             headers: {
@@ -22,6 +25,7 @@ export const findEvent = async (parameters: {[key: string]: any}) => {
         rp(options)
           .then((jsonString: string) => {
               let jsonArray;
+              console.log(jsonString);
               try {
                   jsonArray = JSON.parse(jsonString)
               } catch(error) {
