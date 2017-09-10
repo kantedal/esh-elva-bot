@@ -74,7 +74,7 @@ export const getWeather = async (date?: string, address?: string) => {
           if(!date) {
             weatherMessage += 'Currently it is ' + temp + '°C degrees. '
           } else {
-            weatherMessage += 'On ' + date + ' the weather is ' + temp + '°C degrees. '
+            weatherMessage += date + ' the weather is ' + temp + '°C degrees. '
           }
         }
       }
