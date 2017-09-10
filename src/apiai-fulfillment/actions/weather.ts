@@ -4,7 +4,7 @@ import {isBoolean} from 'util'
 
 const Distance = require('geo-distance')
 
-export const isRain = async (hours_forward?, address?: string) => {
+export const isRain = async (hours_forward?: number, address?: string) => {
   try {
     let weatherCoordinate = null
     let weatherApiAddress = 'https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/15.513/lat/58.417/data.json'
