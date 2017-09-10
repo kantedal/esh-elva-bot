@@ -20,6 +20,7 @@ export interface IUser {
 
 export const getDatabaseUser = (userId: string, sessionId: string): Promise<IUser> => {
   const usersRef = admin.database().ref('users')
+  sessionId = sessionId.substr(0,16)
   return new Promise<IUser>((resolve, reject) => {
     // Fetch user with user id
     usersRef.orderByChild('userId').equalTo(userId).limitToFirst(1).once('value', (snapshot) => {
