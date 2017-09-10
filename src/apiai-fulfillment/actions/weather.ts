@@ -21,7 +21,7 @@ export const isRain = async (hours_forward?: number, address?: string) => {
     }
     try {
       const weatherData = JSON.parse(await request(weatherApiAddress))
-      const weatherParameters = weatherData.timeSeries[0 + hours_forward].parameters
+      const weatherParameters = weatherData.timeSeries[0].parameters
       for(const parameter of weatherParameters){
         if (parameter.name === 'pmean') { // Rain
           if (parameter.values[0] > 0) {return true}

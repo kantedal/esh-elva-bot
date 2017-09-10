@@ -19,7 +19,7 @@ exports.isRain = (hours_forward, address) => tslib_1.__awaiter(this, void 0, voi
         }
         try {
             const weatherData = JSON.parse(yield request(weatherApiAddress));
-            const weatherParameters = weatherData.timeSeries[0 + hours_forward].parameters;
+            const weatherParameters = weatherData.timeSeries[0].parameters;
             for (const parameter of weatherParameters) {
                 if (parameter.name === 'pmean') {
                     if (parameter.values[0] > 0) {
