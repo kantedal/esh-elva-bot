@@ -6,7 +6,8 @@ import {getRandomEventForImmigrants, getSwedishDirections} from './actions/immig
 import {getUserFromSessionId, IUser} from '../chat-logics/databaseUser'
 import {findPublicTransport} from './actions/public-transport'
 import {getWeather} from './actions/weather'
-import {setHome} from './actions/setHome'
+import {translateMessage} from '../chat-logics/translate'
+import {setHome} from './actions/home'
 
 const enum Actions {
   parking = 'parking',
@@ -37,12 +38,12 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(await getSwedishDirections(parameters['swedishLevel'].toLowerCase()))
       break
     case Actions.poiAsTourist:
-      const param = parameters['point_of_interest'] || parameters['point_of_interest_any']
+      let param = parameters['point_of_interest'] || parameters['point_of_interest_any']
+      param = await translateMessage(param, 'sv') // Translate the param to swedish for the api
       console.log(`The param is: ${param}`)
-      responseJson = generateResponseJson(await findPointOfInterest(param)) // ?
+      responseJson = generateResponseJson(await findPointOfInterest(param))
       break
     case Actions.transport:
-      console.log('transport action', parameters['from-address'], parameters['to-address'])
       responseJson = generateResponseJson(await findPublicTransport(parameters['from-address'], parameters['to-address']))
       break
     case Actions.weather:
@@ -73,7 +74,7 @@ export const initApiAiWebhook = async (app: express.Application) => {
   // findPointOfInterest()
   app.post('/apiai', async (req: express.Request, res: any) => {
     const { body } = req
-    const sessionId = body.sessionId
+    const sessionId = body.sessionId.substr(0, 16)
     const { action, parameters } = body.result
 
     // const conexts = body.results.contexts

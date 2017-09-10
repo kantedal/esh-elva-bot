@@ -1,6 +1,3 @@
-
-import {translateMessage} from './chat-logics/translate'
-
 const apiai = require('apiai')
 require('dotenv').config()
 import {startChatClient} from './chat-client'
@@ -12,6 +9,7 @@ import {findPublicTransport} from './apiai-fulfillment/actions/public-transport'
 import {sendMessage} from './chat-logics/api-ai'
 import {initFacebookMessengerWebhook} from './facebook-webhook'
 import {findPointOfInterest} from './apiai-fulfillment/actions/pointOfIntrest'
+import {generateResponseJson} from './apiai-fulfillment/generateResponseJson'
 
 export let apiaiApp
 
@@ -26,12 +24,13 @@ const startServer = async (): Promise<void> => {
   startChatClient()
   initFacebookMessengerWebhook(App)
 
-  setTimeout(() => initFacebookMessengerWebhook(App), 2000)
+  const responseJson = generateResponseJson(await findPublicTransport('Ryds Allé 19', 'Ågatan 2'))
+  console.log(responseJson)
 
-  //const user: IUser = {
-  //  userId: '12321'
-  //}
-  //console.log(await translateMessage('hello my name is jonathan', 'en'))
+  // const usersRef = admin.database().ref('users')
+  // usersRef.orderByChild('sessionId').equalTo('heja-blåvitt').limitToFirst(1).once('value', (snapshot) => {
+  //   console.log('found user', snapshot.val())
+  // })
 }
 
 startServer()

@@ -14,12 +14,14 @@ export interface IUser {
   sessionId?: string
   firstName?: string
   lastName?: string
+  homeAddress?: string
   coordinates?: { lon: number, lat: number }
   preferredLanguage?: 'EN' | 'SV'
 }
 
 export const getDatabaseUser = (userId: string, sessionId: string): Promise<IUser> => {
   const usersRef = admin.database().ref('users')
+  sessionId = sessionId.substr(0,16)
   return new Promise<IUser>((resolve, reject) => {
     // Fetch user with user id
     usersRef.orderByChild('userId').equalTo(userId).limitToFirst(1).once('value', (snapshot) => {
@@ -80,7 +82,7 @@ export const setSessionId = (userId: string, sessionId: string) => {
         if (userKey != null) {
           const user = users[userKey]
           if (user) {
-            admin.database().ref('users/' + userKey + '/sessionId/').set(sessionId)
+            admin.database().ref('users/' + userKey + '/sessionId/').set(sessionId.substr(0, 16))
             resolve()
             return
           }
@@ -98,6 +100,7 @@ export const setUserProperty = (sessionId: string, propertyKey: string, value: a
     console.log('find user with key', sessionId)
     usersRef.orderByChild('sessionId').equalTo(sessionId).limitToFirst(1).once('value', (snapshot) => {
       const users = snapshot.val()
+      console.log('found users', users)
       for (const userKey in users) {
         if (userKey != null) {
           const user = users[userKey]
