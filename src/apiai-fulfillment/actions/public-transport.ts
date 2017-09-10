@@ -1,3 +1,4 @@
+import {generateResponseJson} from '../generateResponseJson'
 const request = require('request-promise')
 import {geocodeAddress, IGeoCode} from './address'
 
@@ -32,7 +33,7 @@ export const findPublicTransport = async (from: string, to: string) => {
           break
       }
 
-      responses.push(responseMessage)
+      responses.push(generateResponseJson(responseMessage))
       responseMessage = ''
 
       count++

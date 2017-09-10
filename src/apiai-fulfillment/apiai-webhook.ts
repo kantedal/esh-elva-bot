@@ -55,7 +55,7 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(poiRes)
       break
     case Actions.transport:
-      let transpRes = ''
+      let transpRes
       try {
         transpRes = await findPublicTransport(parameters['from-address'], parameters['to-address'])
       } catch(error) {
