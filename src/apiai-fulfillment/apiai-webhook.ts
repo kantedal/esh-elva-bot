@@ -45,20 +45,24 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       const param = await translateMessage(origParam, 'sv') // Translate the param to swedish for the api
       console.log(`The param is: ${param}`)
 
-      let response = ''
+      let poiRes = ''
       try {
-        response = await findPointOfInterest(param)
+        poiRes = await findPointOfInterest(param)
       } catch(error) {
-        console.log(`CAUGHT ERROR IN POINT OF INTEREST AWAIT`)
-        response = `Sorry, couldn't parse that.`
+        poiRes = `Sorry, couldn't find any results for ${origParam}, try golf instead?`
       }
 
-      response = response === '' ? `Sorry, could not find any result for ${origParam}. Try something else?` : response
-      console.log(`POINT OF INTEREST returning ${response} to json`)
-      responseJson = generateResponseJson(response)
+      responseJson = generateResponseJson(poiRes)
       break
     case Actions.transport:
-      responseJson = generateResponseJson(await findPublicTransport(parameters['from-address'], parameters['to-address']))
+      let transpRes = ''
+      try {
+        transpRes = await findPublicTransport(parameters['from-address'], parameters['to-address'])
+      } catch(error) {
+        transpRes = `Sorry, couldn't generate results for ${parameters['from-address']} and ${parameters['to-address']}.`
+      }
+
+      responseJson = generateResponseJson(transpRes)
       break
     case Actions.weather:
       responseJson = generateResponseJson(await getWeather(parameters['date']))
@@ -70,7 +74,16 @@ export const resolveMessage = async (action: string, parameters: {[parameter: st
       responseJson = generateResponseJson(await getHome(sessionId))
       break
     case Actions.takeMeHome:
-      responseJson = generateResponseJson(await takeMeHome(sessionId, parameters['address']))
+      let takeHomeRes = ''
+
+      try {
+        takeHomeRes = await takeMeHome(sessionId, parameters['address'])
+      } catch (error) {
+        console.log(error)
+        takeHomeRes = `Sorry, couldn't compute route from ${parameters['address']}`
+      }
+
+      responseJson = generateResponseJson(takeHomeRes)
       break
     case Actions.test:
       responseJson = {
