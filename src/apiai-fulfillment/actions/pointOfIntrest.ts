@@ -49,6 +49,12 @@ export const findPointOfInterest = async (type: string) => {
 
       let returnString: string = `Try the following:\n`
       for (const d of data) {
+
+        // Base case for facebook
+        if (returnString.length > 320) {
+          break
+        }
+
         returnString += `\n${d.name} at ${d.address} \n`
 
         if (d.phone) {
@@ -62,6 +68,7 @@ export const findPointOfInterest = async (type: string) => {
         returnString += `\n`
       }
 
+      // Some max length for facebook
       resolve(returnString.substring(0, 360))
     })
     .then((response) => response)
